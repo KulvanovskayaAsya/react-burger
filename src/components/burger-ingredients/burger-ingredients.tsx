@@ -88,14 +88,7 @@ export const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({ ingredient
 
       {isOpen && selectedIngredient && (
         <Modal title='Детали ингредиента' onClose={closeModal}>
-          <IngredientDetails 
-            image={selectedIngredient.image_large}
-            name={selectedIngredient.name}
-            calories={selectedIngredient.calories}
-            proteins={selectedIngredient.proteins}
-            fat={selectedIngredient.fat}
-            carbohydrates={selectedIngredient.carbohydrates}
-          />
+          <IngredientDetails ingredient={selectedIngredient}/>
         </Modal>
       )}
     </>

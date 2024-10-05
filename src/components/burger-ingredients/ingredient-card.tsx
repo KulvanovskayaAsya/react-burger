@@ -22,7 +22,7 @@ export const IngridientCard: React.FC<IngredientCardProps> = ({ ingredient, coun
       className={styles.card}
       onClick={handleClick}
     >
-      <img className={styles.cardImage} src={ingredient.image} />
+      <img className={styles.cardImage} src={ingredient.image} alt={`Внешний вид ингредиента ${ingredient.name}`} />
       <Price price={ingredient.price} />
       <p className={styles.cardTitle}>
         {ingredient.name}

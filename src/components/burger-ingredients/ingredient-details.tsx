@@ -1,20 +1,18 @@
 import React from 'react';
 
 import styles from './ingredient-details.module.css';
+import { Ingredient } from '../../types/burger';
 
 interface IngredientDetailsProps {
-  image: string;
-  name: string;
-  calories: number;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
+  ingredient: Ingredient;
 }
 
-export const IngredientDetails: React.FC<IngredientDetailsProps> = ({ image, name, calories, proteins, fat, carbohydrates }) => {
+export const IngredientDetails: React.FC<IngredientDetailsProps> = ({ ingredient }) => {
+  const { image_large: image, name, calories, proteins, fat, carbohydrates } = ingredient;
+
   return (
     <div className={styles.container}>
-      <img className={styles.image} src={image} />
+      <img className={styles.image} src={image} alt={`Внешний вид ингредиента ${ingredient.name}`} />
       <h2 className={styles.title}>
         {name}
       </h2>

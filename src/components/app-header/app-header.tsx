@@ -1,10 +1,12 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import commonStyles from '../../common.module.css';
 import styles from './app-header.module.css';
 
 export const AppHeader = () => {
   return (
     <header className={styles.header}>
-      <nav className='main-container'>
+      <nav className={commonStyles.mainContainer}>
         <ul className={styles.navList}>
           <li>
             <a href='/' className={`${styles.navLink} ${styles.active}`}>

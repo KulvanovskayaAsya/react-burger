@@ -1,5 +1,5 @@
-import { AppHeader } from './components/app-header/app-header'
-import { HomePage } from './pages'
+import { AppHeader } from '../app-header/app-header'
+import { HomePage } from '../../pages'
 
 function App() {
   return (
