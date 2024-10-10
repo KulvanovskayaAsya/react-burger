@@ -1,17 +1,20 @@
 import { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
+
 import { BurgerConstructor } from '../../components/burger-constructor/burger-constructor';
-import { BurgerIngredients } from '../../components/burger-ingredients/burger-ingredients'
-import { getIngredientsUrl } from '../../constants/api-constants';
-import { useFetch } from '../../hooks/useFetch';
-import { Ingredient, IngredientsData } from '../../types/burger';
+import { BurgerIngredients } from '../../components/burger-ingredients/burger-ingredients';
+
+import { Ingredient } from '../../types/burger';
 
 import commonStyles from '../../common.module.css';
 import styles from './home-page.module.css';
+import { selectIngredients, selectIngredientsStatus } from '../../services/ingredientsSlice';
+import { STATUS } from '../../types/slices';
 
 export const HomePage = () => {
   const [selectedIngredients, setSelectedIngredients] = useState<Ingredient[]>([]);
-  
-  const { loading, error, data } = useFetch<IngredientsData>(getIngredientsUrl);
+  const ingredients = useSelector(selectIngredients);
+  const status = useSelector(selectIngredientsStatus);
 
   const handleAddIngredient = useCallback((ingredient: Ingredient) => {
     if (ingredient.type === 'bun') {
@@ -29,32 +32,26 @@ export const HomePage = () => {
     return ingredients.filter(item => item._id === ingredientId).length;
   };
 
-  if (loading) {
-    return <p>Да, вы голодны, ингридиенты уже летят к вам...</p>;
+  if (status === STATUS.LOADING) {
+    return <p>Да, вы голодны, ингредиенты уже летят к вам...</p>;
   }
 
-  if (error) {
-    return <p>Ой, похоже кто-то украл все ингридиенты, уже разбираемся</p>;
+  if (status === STATUS.FAILED) {
+    return <p>Ой, похоже кто-то украл все ингредиенты, уже разбираемся</p>;
   }
 
-  if (data && data.success && data.data.length > 0) {
-    const { data: ingredients } = data;
-
-    const ingredientCounts = ingredients.reduce((acc, item) => {
-      acc[item._id] = countIngredients(selectedIngredients, item._id);
-      return acc;
-    }, {} as { [key: string]: number });
+  // if (status === STATUS.SUCCEEDED && ingredients && ingredients.length > 0) {
+    // const ingredientCounts = ingredients.reduce((acc, item) => {
+    //   acc[item._id] = countIngredients(selectedIngredients, item._id);
+    //   return acc;
+    // }, {} as { [key: string]: number });
 
     return (
       <main className={commonStyles.mainContainer}>
         <h1 className={styles.pageTitle}>Соберите бургер</h1>
         <div className={commonStyles.flexContainer}>
           <div className={commonStyles.flexHalfChild}>
-            <BurgerIngredients 
-              ingredients={ingredients}
-              ingredientCounts={ingredientCounts}
-              onAddIngredient={handleAddIngredient}
-            />
+            <BurgerIngredients />
           </div>
           <div className={commonStyles.flexHalfChild}>
             <BurgerConstructor ingredients={selectedIngredients} />

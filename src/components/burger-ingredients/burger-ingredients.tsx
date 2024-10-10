@@ -8,11 +8,14 @@ import styles from './burger-ingredients.module.css';
 import { useModal } from '../../hooks/useModal';
 import { IngredientDetails } from './ingredient-details';
 import { Modal } from '../modal/modal';
+import { AppDispatch } from '../../services';
+import { fetchIngredients, selectIngredients, selectIngredientsStatus } from '../../services/ingredientsSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { STATUS } from '../../types/slices';
 
 interface BurgerIngredientsProps {
-  ingredients: Ingredient[];
-  ingredientCounts: { [key: string]: number };
-  onAddIngredient: (ingredient: Ingredient) => void;
+  // ingredientCounts: { [key: string]: number };
+  // onAddIngredient: (ingredient: Ingredient) => void;
 }
 
 const ingredientTypes = [
@@ -21,7 +24,17 @@ const ingredientTypes = [
   { type: 'sauce', title: 'Соусы', id: 'sauce' },
 ];
 
-export const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({ ingredients, ingredientCounts, onAddIngredient }) => {
+export const BurgerIngredients: React.FC<BurgerIngredientsProps> = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const ingredients = useSelector(selectIngredients);
+  const status = useSelector(selectIngredientsStatus);
+
+  useEffect(() => {
+    if (status === STATUS.IDLE) {
+      dispatch(fetchIngredients());
+    }
+  }, [dispatch, status]);
+
   const [current, setCurrent] = useState('bun');
   const [selectedIngredient, setSelectedIngredient] = useState<Ingredient | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -70,7 +83,7 @@ export const BurgerIngredients: React.FC<BurgerIngredientsProps> = ({ ingredient
 
       <div className={styles.burgerIngredients} ref={scrollContainerRef} onScroll={handleScrollEnd}>
         {ingredientTypes.map(({ type, title, id }) => {
-          const filteredIngredients = useMemo(() => ingredients.filter(ingredient => ingredient.type === type), [ingredients]);
+          const filteredIngredients = useMemo(() => ingredients?.filter(ingredient => ingredient.type === type), [ingredients]);
 
           return (
             <div id={id} key={id}>
