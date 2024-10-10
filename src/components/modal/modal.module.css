@@ -1,0 +1,36 @@
+.modal {
+  composes: p-10 from global;
+  box-sizing: content-box;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  max-width: 90%;
+  background-color: var(--modal-background-color);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+  z-index: 1000;
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  composes: text text_type_main-large from global;
+}
+
+.content {
+  margin-top: 16px;
+}
+
+.closeButton {
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+

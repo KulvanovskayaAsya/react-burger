@@ -1,0 +1,33 @@
+.burgerConstructor {
+  display: flex;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin: 0 auto;
+}
+
+.ingredient {
+  composes: mb-4 from global;
+  display: flex;
+  align-items: center;
+}
+
+.ingredientLocked {
+  composes: ml-5 from global;
+}
+
+.scrollableContainer {
+  max-height: calc(100vh - 530px);
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.submitOrderContainer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 40px;
+}

@@ -1,0 +1,29 @@
+.container {
+  composes: pt-5 pb-5 from global;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.number {
+  composes: text text_type_digits-large mb-8 from global;
+  text-shadow: 0px 0px 15px var(--primary-color);
+}
+
+.numberCaption {
+  composes: text text_type_main-medium from global;
+}
+
+.doneImage {
+  composes: mt-15 mb-15 from global;
+  width: 120px;
+  height: 120px; 
+}
+
+.orderProgress {
+  composes: text text_type_main-default mb-2 from global;
+}
+
+.orderCaption {
+  composes: text text_type_main-default text_color_inactive from global;
+}

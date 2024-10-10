@@ -1,0 +1,8 @@
+.burgerIngredients {
+  max-height: calc(100vh - 320px);
+  overflow: auto;
+}
+.tabs {
+  composes: mb-10 from global;
+  display: flex;
+}

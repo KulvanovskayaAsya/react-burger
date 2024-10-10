@@ -1,0 +1,12 @@
+.card {
+  position: relative;
+  display: flex;
+  gap: 4px;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cardTitle {
+  composes: text text text_type_main-small from global;
+  text-align: center;
+}

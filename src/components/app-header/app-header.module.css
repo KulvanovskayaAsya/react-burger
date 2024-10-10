@@ -1,0 +1,41 @@
+.header {
+  composes: p-4 mb-10 from global;
+  width: 100%;
+  background: var(--modal-background-color);
+}
+
+.navList {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navItem.logo {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navLink {
+  composes: p-4 text_color_inactive from global;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.navLink:hover {
+  background-color: var(--background-color);
+  color: var(--text-primary-color);
+}
+
+.navLink.active {
+  color: var(--text-primary-color);
+}
+
+.text {
+  composes: text text_type_main-medium from global;
+}
