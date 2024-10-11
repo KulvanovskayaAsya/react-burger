@@ -1,5 +1,5 @@
 import { Ingredient } from '../../types/burger';
-import { IngridientCard } from './ingredient-card';
+import { IngredientCard } from './ingredient-card';
 import styles from './ingredients-type-section.module.css';
 
 interface IngredientsTypeSectionProps {
@@ -10,11 +10,10 @@ interface IngredientsTypeSectionProps {
   onIngredientClick: (ingredient: Ingredient) => void;
 }
 
-export const IngredientsTypeSection: React.FC<IngredientsTypeSectionProps> = ({ 
-  title, 
-  ingredients, 
+export const IngredientsTypeSection: React.FC<IngredientsTypeSectionProps> = ({
+  title,
+  ingredients,
   ingredientCounts,
-  onAddIngredient,
   onIngredientClick
 }) => {
   return (
@@ -23,11 +22,10 @@ export const IngredientsTypeSection: React.FC<IngredientsTypeSectionProps> = ({
 
       <div className={styles.sectionContent}>
         {ingredients.map(item => (
-          <IngridientCard
+          <IngredientCard
             key={item._id}
             ingredient={item}
-            count={ingredientCounts[item._id] || 0}
-            onAddIngredient={onAddIngredient}
+            count={0}
             onIngredientClick={onIngredientClick}
           />
         ))}

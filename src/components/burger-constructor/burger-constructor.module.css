@@ -1,5 +1,10 @@
 .burgerConstructor {
   display: flex;
+  border: 2px dashed transparent;
+}
+
+.hovered {
+  border-color: lightgreen;
 }
 
 .container {

@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
-import { getIngredients } from '../api/ingrediets';
+import { getIngredients } from '../api/ingredients';
 import { Ingredient } from '../types/burger';
 import { BaseSliceState, STATUS } from '../types/slices';
 import { RootState } from '.';
 
 interface IngredientsState extends BaseSliceState {
-  ingredients: Ingredient[] | null;
+  ingredients: Ingredient[];
 }
 
 const initialState: IngredientsState = {
@@ -14,8 +14,13 @@ const initialState: IngredientsState = {
   error: null,
 };
 
-const ingredientsSlice = createSlice({
-  name: 'ingredients',
+export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients', async () => {
+  const response = await getIngredients();
+  return response.data;
+});
+
+const burgerIngredientsSlice = createSlice({
+  name: 'burgerIngredients',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -35,16 +40,12 @@ const ingredientsSlice = createSlice({
   }
 });
 
-export default ingredientsSlice.reducer;
+export default burgerIngredientsSlice.reducer;
 
 export const selectIngredients = (state: RootState) => state.burgerIngredients.ingredients;
 export const selectIngredientsStatus = (state: RootState) => state.burgerIngredients.status;
-export const selectIngredientById = (id: string) =>
-  createSelector(selectIngredients, (ingredients) =>
-    ingredients ? ingredients.find((ingredient: Ingredient) => ingredient._id === id) : null
-  );
 
-export const fetchIngredients = createAsyncThunk('ingredients/fetchIngredients', async () => {
-  const response = await getIngredients();
-  return response.data;
-});
+export const selectIngredientsByType = createSelector(
+  [selectIngredients, (_: RootState, type: string) => type],
+  (ingredients, type) => ingredients?.filter((ingredient) => ingredient.type === type)
+);

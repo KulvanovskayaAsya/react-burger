@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDrag } from "react-dnd";
 import styles from './ingredient-card.module.css';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Ingredient } from '../../types/burger';
@@ -7,19 +8,23 @@ import { Price } from '../price/price';
 interface IngredientCardProps {
   ingredient: Ingredient;
   count: number;
-  onAddIngredient: (ingredient: Ingredient) => void;
   onIngredientClick: (ingredient: Ingredient) => void;
 }
 
-export const IngridientCard: React.FC<IngredientCardProps> = ({ ingredient, count, onAddIngredient, onIngredientClick }) => {
+export const IngredientCard: React.FC<IngredientCardProps> = ({ ingredient, count, onIngredientClick }) => {
+  const [, dragRef] = useDrag({
+    type: 'ingredient',
+    item: ingredient
+  });
+
   const handleClick = () => {
-    onAddIngredient(ingredient);
     onIngredientClick(ingredient);
   };
 
   return (
-    <article 
+    <article
       className={styles.card}
+      ref={dragRef}
       onClick={handleClick}
     >
       <img className={styles.cardImage} src={ingredient.image} alt={`Внешний вид ингредиента ${ingredient.name}`} />

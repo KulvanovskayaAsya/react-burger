@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Ingredient } from '../../types/burger';
 import { IngredientsTypeSection } from './ingredients-type-section';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -9,39 +9,41 @@ import { useModal } from '../../hooks/useModal';
 import { IngredientDetails } from './ingredient-details';
 import { Modal } from '../modal/modal';
 import { AppDispatch } from '../../services';
-import { fetchIngredients, selectIngredients, selectIngredientsStatus } from '../../services/ingredientsSlice';
+import { fetchIngredients, selectIngredientsByType, selectIngredientsStatus } from '../../services/burgerIngredientsSlice';
+import { setSelectedIngredient, clearSelectedIngredient, selectSelectedIngredient } from '../../services/ingredientDetailsSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { STATUS } from '../../types/slices';
 
-interface BurgerIngredientsProps {
-  // ingredientCounts: { [key: string]: number };
-  // onAddIngredient: (ingredient: Ingredient) => void;
-}
-
-const ingredientTypes = [
-  { type: 'bun', title: 'Булки', id: 'bun' },
-  { type: 'main', title: 'Начинки', id: 'main' },
-  { type: 'sauce', title: 'Соусы', id: 'sauce' },
-];
+interface BurgerIngredientsProps {}
 
 export const BurgerIngredients: React.FC<BurgerIngredientsProps> = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const ingredients = useSelector(selectIngredients);
+
   const status = useSelector(selectIngredientsStatus);
+  const selectedIngredient = useSelector(selectSelectedIngredient);
+
+  const buns = useSelector((state) => selectIngredientsByType(state, 'bun'));
+  const mains = useSelector((state) => selectIngredientsByType(state, 'main'));
+  const sauces = useSelector((state) => selectIngredientsByType(state, 'sauce'));
+
+  const sections = [
+    { title: 'Булки', type: 'bun', ingredients: buns },
+    { title: 'Начинки', type: 'main', ingredients: mains },
+    { title: 'Соусы', type: 'sauce', ingredients: sauces },
+  ];
 
   useEffect(() => {
     if (status === STATUS.IDLE) {
       dispatch(fetchIngredients());
     }
-  }, [dispatch, status]);
+  }, [status]);
 
   const [current, setCurrent] = useState('bun');
-  const [selectedIngredient, setSelectedIngredient] = useState<Ingredient | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const { isOpen, openModal, closeModal } = useModal();
-  const activeTab = useScrollSpy(ingredientTypes.map(({ id }) => id), { root: scrollContainerRef.current, rootMargin: '0px 0px -90% 0px' });
-  
+  const activeTab = useScrollSpy(['bun', 'main', 'sauce'], { root: scrollContainerRef.current, rootMargin: '0px 0px -90% 0px' });
+
   useEffect(() => {
     if (activeTab) {
       setCurrent(activeTab);
@@ -53,7 +55,7 @@ export const BurgerIngredients: React.FC<BurgerIngredientsProps> = () => {
     if (container) {
       const isAtBottom = container.scrollHeight - container.scrollTop === container.clientHeight;
       if (isAtBottom) {
-        setCurrent('sauce'); // Активируем последнюю секцию, если скролл дошел до конца
+        setCurrent('sauce');
       }
     }
   };
@@ -67,41 +69,48 @@ export const BurgerIngredients: React.FC<BurgerIngredientsProps> = () => {
   };
 
   const handleIngredientClick = useCallback((ingredient: Ingredient) => {
-    setSelectedIngredient(ingredient);
+    dispatch(setSelectedIngredient(ingredient));
     openModal();
   }, []);
+
+  const closeModalHandler = () => {
+    dispatch(clearSelectedIngredient());
+    closeModal();
+  };
+
+  if (status === STATUS.LOADING) {
+    return <p>Да, вы голодны, ингредиенты уже летят к вам...</p>;
+  }
+
+  if (status === STATUS.FAILED) {
+    return <p>Ой, похоже кто-то украл все ингредиенты, уже разбираемся</p>;
+  }
 
   return (
     <>
       <div className={styles.tabs}>
-        {ingredientTypes.map(({ id, title }) => (
-          <Tab key={id} value={id} active={current === id} onClick={() => handleTabClick(id)}>
+        {sections.map(({ type, title }) => (
+          <Tab key={type} value={type} active={current === type} onClick={() => handleTabClick(type)}>
             {title}
           </Tab>
         ))}
       </div>
 
       <div className={styles.burgerIngredients} ref={scrollContainerRef} onScroll={handleScrollEnd}>
-        {ingredientTypes.map(({ type, title, id }) => {
-          const filteredIngredients = useMemo(() => ingredients?.filter(ingredient => ingredient.type === type), [ingredients]);
-
-          return (
-            <div id={id} key={id}>
-              <IngredientsTypeSection 
-                title={title}
-                ingredients={filteredIngredients}
-                ingredientCounts={ingredientCounts}
-                onAddIngredient={onAddIngredient}
-                onIngredientClick={handleIngredientClick}
-              />
-            </div>
-          );
-        })}
+        {sections.map(({ title, type, ingredients }) => (
+          <IngredientsTypeSection
+            key={type}
+            title={title}
+            type={type}
+            ingredients={ingredients}
+            onIngredientClick={handleIngredientClick}
+          />
+        ))}
       </div>
 
       {isOpen && selectedIngredient && (
-        <Modal title='Детали ингредиента' onClose={closeModal}>
-          <IngredientDetails ingredient={selectedIngredient}/>
+        <Modal title="Детали ингредиента" onClose={closeModalHandler}>
+          <IngredientDetails ingredient={selectedIngredient} />
         </Modal>
       )}
     </>
