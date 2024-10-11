@@ -1,8 +1,9 @@
 import { Provider } from 'react-redux';
-import { store } from '../../services';
 
-import { AppHeader } from '../app-header/app-header'
-import { HomePage } from '../../pages'
+import { HomePage } from '../../pages';
+import { AppHeader } from '../app-header/app-header';
+
+import { store } from '../../services';
 
 function App() {
   return (

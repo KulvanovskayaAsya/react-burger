@@ -1,33 +1,51 @@
-.burgerConstructor {
-  display: flex;
-  border: 2px dashed transparent;
-}
-
-.hovered {
-  border-color: lightgreen;
-}
-
 .container {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  margin: 0 auto;
+}
+
+.constructorWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+  min-height: 300px;
+  border: 2px dashed transparent;
+  transition: border-color 0.3s ease;
+}
+
+.hovered {
+  border-color: var(--primary-color);
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  background-color: var(--modal-background-color);
+  padding: 10px;
+  text-align: center;
+  font-size: 1.5rem;
+  color: var(--text-color);
 }
 
 .ingredient {
-  composes: mb-4 from global;
   display: flex;
   align-items: center;
 }
 
 .ingredientLocked {
-  composes: ml-5 from global;
+  composes: ml-6 from global;
 }
 
 .scrollableContainer {
-  max-height: calc(100vh - 530px);
+  max-height: calc(100vh - 500px);
   overflow-y: auto;
-  padding-right: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .submitOrderContainer {

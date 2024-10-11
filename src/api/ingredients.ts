@@ -1,11 +1,16 @@
 import { INGREDIENTS_API_URL } from '../constants/api-constants';
-import { IngredientsData } from '../types/burger';
+import { Ingredient } from '../types/burger';
 
-export const getIngredients = async () => {
+interface IngredientsResponse {
+  data: Ingredient[];
+  success: boolean
+}
+
+export const getIngredients = async (): Promise<IngredientsResponse> => {
   const response = await fetch(INGREDIENTS_API_URL);
   if (!response.ok) {
     throw new Error('Ошибка при получении ингредиентов');
   }
-  const data: IngredientsData = await response.json();
+  const data = await response.json();
   return data;
 };

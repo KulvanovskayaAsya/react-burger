@@ -1,17 +1,24 @@
 import React from 'react';
-import { useDrag } from "react-dnd";
-import styles from './ingredient-card.module.css';
+import { useSelector } from 'react-redux';
+import { useDrag } from 'react-dnd';
+
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Ingredient } from '../../types/burger';
 import { Price } from '../price/price';
+
+import { selectIngredientCount } from '../../services/burgerConstructorSlice';
+import { RootState } from '../../services';
+
+import { Ingredient } from '../../types/burger';
+
+import styles from './ingredient-card.module.css';
 
 interface IngredientCardProps {
   ingredient: Ingredient;
-  count: number;
   onIngredientClick: (ingredient: Ingredient) => void;
 }
 
-export const IngredientCard: React.FC<IngredientCardProps> = ({ ingredient, count, onIngredientClick }) => {
+export const IngredientCard: React.FC<IngredientCardProps> = ({ ingredient, onIngredientClick }) => {
+  const count = useSelector((state: RootState) => selectIngredientCount(state, ingredient._id, ingredient.type));
   const [, dragRef] = useDrag({
     type: 'ingredient',
     item: ingredient
