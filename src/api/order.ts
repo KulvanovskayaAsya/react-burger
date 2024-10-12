@@ -1,5 +1,6 @@
 import { ORDERS_API_URL } from '../constants/api-constants';
 import { Ingredient } from '../types/burger';
+import { request } from './request';
 
 interface OrderResponse {
   name: string;
@@ -12,7 +13,7 @@ interface OrderResponse {
 export const postOrder = async (orderIngredients: Ingredient[]): Promise<OrderResponse> => {
   const ingredientIds = orderIngredients.map(ingredient => ingredient._id);
 
-  const response = await fetch(ORDERS_API_URL, {
+  return request<OrderResponse>(ORDERS_API_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -21,11 +22,4 @@ export const postOrder = async (orderIngredients: Ingredient[]): Promise<OrderRe
       ingredients: ingredientIds,
     }),
   });
-
-  if (!response.ok) {
-    throw new Error('Ошибка при получении ингредиентов');
-  }
-
-  const data = await response.json();
-  return data;
 };

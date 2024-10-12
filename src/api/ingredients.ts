@@ -1,5 +1,6 @@
 import { INGREDIENTS_API_URL } from '../constants/api-constants';
 import { Ingredient } from '../types/burger';
+import { request } from './request';
 
 interface IngredientsResponse {
   data: Ingredient[];
@@ -7,10 +8,5 @@ interface IngredientsResponse {
 }
 
 export const getIngredients = async (): Promise<IngredientsResponse> => {
-  const response = await fetch(INGREDIENTS_API_URL);
-  if (!response.ok) {
-    throw new Error('Ошибка при получении ингредиентов');
-  }
-  const data = await response.json();
-  return data;
+  return request<IngredientsResponse>(INGREDIENTS_API_URL);
 };
