@@ -1,7 +1,8 @@
 import React from 'react';
 
-import styles from './ingredient-details.module.css';
 import { Ingredient } from '../../types/burger';
+
+import styles from './ingredient-details.module.css';
 
 interface IngredientDetailsProps {
   ingredient: Ingredient;
