@@ -12,3 +12,27 @@
   padding: 0 24px;
   margin: 0 auto;
 }
+
+
+.pageTitle {
+  composes: text text_type_main-large mb-5 from global;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 80px;
+}
+
+.formPageContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.formPageLinks {
+  composes: text text_type_main-default from global;
+}

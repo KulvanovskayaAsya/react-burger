@@ -2,6 +2,7 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 
 import commonStyles from '../../common.module.css';
 import styles from './app-header.module.css';
+import { NavLink } from 'react-router-dom';
 
 export const AppHeader = () => {
   return (
@@ -9,30 +10,30 @@ export const AppHeader = () => {
       <nav className={commonStyles.mainContainer}>
         <ul className={styles.navList}>
           <li>
-            <a href='/' className={`${styles.navLink} ${styles.active}`}>
+            <NavLink to='/' className={`${styles.navLink} ${styles.active}`}>
               <BurgerIcon type='primary' />
               <p className={styles.text}>Конструктор</p>
-            </a>
+            </NavLink>
           </li>
 
           <li className={styles.navItem}>
-            <a href='/orders' className={styles.navLink}>
+            <NavLink to='/orders' className={styles.navLink}>
               <ListIcon type='secondary' />
               <p className={styles.text}>Лента заказов</p>
-            </a>
+            </NavLink>
           </li>
 
           <li className={`${styles.navItem} ${styles.logo}`}>
-            <a href='/' className={styles.logoLink}>
+            <NavLink to='/' className={styles.logoLink}>
               <Logo />
-            </a>
+            </NavLink>
           </li>
 
           <li className={styles.navItem}>
-            <a href='/profile' className={styles.navLink}>
+            <NavLink to='/profile' className={styles.navLink}>
               <ProfileIcon type='secondary' />
               <p className={styles.text}>Личный кабинет</p>
-            </a>
+            </NavLink>
           </li>
         </ul>
       </nav>
