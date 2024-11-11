@@ -5,7 +5,7 @@ export enum STATUS {
   FAILED = 'failed'
 }
 
-export interface BaseSliceState {
+export interface IBaseSliceState {
   status: STATUS;
   error: string | null;
 }

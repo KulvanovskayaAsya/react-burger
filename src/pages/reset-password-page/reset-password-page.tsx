@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
 import commonStyles from '../../common.module.css';
-import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../services';
@@ -21,8 +21,6 @@ export const ResetPasswordPage: React.FC = () => {
     password: '',
     code: ''
   });
-  
-  const onIconClick = () => {}
 
   const handleResetPasswordSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
@@ -37,14 +35,10 @@ export const ResetPasswordPage: React.FC = () => {
     <div className={commonStyles.formPageContainer}>
       <h1 className={commonStyles.pageTitle}>Восстановление пароля</h1>
       <form className={commonStyles.form} onSubmit={handleResetPasswordSubmit}>
-        <Input
+        <PasswordInput
           value={values.password}
           onChange={handleChange}
-          type='password'
           name='password'
-          placeholder='Введите новый пароль'
-          icon='ShowIcon'
-          onIconClick={onIconClick}
         />
         <Input
           value={values.code}

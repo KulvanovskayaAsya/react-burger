@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
-import commonStyles from '../../common.module.css';
-import { Button, EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useNavigate } from 'react-router-dom';
 import { registerUser } from '../../services/authSlice';
 import { useForm } from '../../hooks/useForm';
 import { useDispatch } from 'react-redux';
+import commonStyles from '../../common.module.css';
 import { AppDispatch } from '../../services';
 
 interface IRegisterForm {
@@ -22,8 +22,6 @@ export const RegisterPage: React.FC = () => {
     email: '',
     password: ''
   });
-
-  const onIconClick = () => {};
 
   const handleRegisterSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
@@ -51,20 +49,15 @@ export const RegisterPage: React.FC = () => {
           onChange={handleChange}
           name='email'
         />
-        <Input
+        <PasswordInput
           value={values.password}
           onChange={handleChange}
-          type='password'
           name='password'
-          placeholder='Пароль'
-          icon='ShowIcon'
-          onIconClick={onIconClick}
         />
         <Button 
           htmlType='submit' 
           type='primary' 
           size='medium'
-          disabled={status === 'loading'}
         >
           Зарегистрироваться
         </Button>

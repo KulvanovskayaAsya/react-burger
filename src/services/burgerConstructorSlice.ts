@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction, nanoid, createSelector } from '@reduxjs/toolkit';
-import { Ingredient } from '../types/burger';
+import { IIngredient } from '../types/burger';
 import { RootState } from '.';
 
-interface burgerConstructorState {
-  bun: Ingredient | null;
-  ingredients: Array<Ingredient & { key: string }>;
+interface IBurgerConstructorState {
+  bun: IIngredient | null;
+  ingredients: Array<IIngredient & { key: string }>;
 }
-const initialState: burgerConstructorState = {
+const initialState: IBurgerConstructorState = {
   bun: null,
   ingredients: []
 };
@@ -19,14 +19,14 @@ const burgerConstructorSlice = createSlice({
       state.bun = null;
       state.ingredients = [];
     },
-    addBun: (state, action: PayloadAction<Ingredient>) => {
+    addBun: (state, action: PayloadAction<IIngredient>) => {
       state.bun = action.payload;
     },
     addIngredient: {
-      reducer: (state, action: PayloadAction<Ingredient & { key: string }>) => {
+      reducer: (state, action: PayloadAction<IIngredient & { key: string }>) => {
         state.ingredients.push(action.payload);
       },
-      prepare: (ingredient: Ingredient) => {
+      prepare: (ingredient: IIngredient) => {
         return { payload: { ...ingredient, key: nanoid() } };
       }
     },

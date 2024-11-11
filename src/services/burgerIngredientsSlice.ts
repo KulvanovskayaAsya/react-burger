@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 import { getIngredients } from '../api/ingredients';
-import { Ingredient } from '../types/burger';
-import { BaseSliceState, STATUS } from '../types/slices';
+import { IIngredient } from '../types/burger';
+import { IBaseSliceState, STATUS } from '../types/slices';
 import { RootState } from '.';
 
-interface IngredientsState extends BaseSliceState {
-  ingredients: Ingredient[];
+interface IIngredientsState extends IBaseSliceState {
+  ingredients: IIngredient[];
 }
 
-const initialState: IngredientsState = {
+const initialState: IIngredientsState = {
   ingredients: [],
   status: STATUS.IDLE,
   error: null,

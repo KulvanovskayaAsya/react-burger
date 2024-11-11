@@ -1,12 +1,12 @@
-import { INGREDIENTS_API_URL } from '../constants/api-constants';
-import { Ingredient } from '../types/burger';
+import { API_ENDPOINTS } from './endpoints';
+import { IIngredient } from '../types/burger';
 import { request } from './request';
 
-interface IngredientsResponse {
-  data: Ingredient[];
+interface IIngredientsResponse {
+  data: IIngredient[];
   success: boolean
 }
 
-export const getIngredients = async (): Promise<IngredientsResponse> => {
-  return request<IngredientsResponse>(INGREDIENTS_API_URL);
+export const getIngredients = async (): Promise<IIngredientsResponse> => {
+  return request<IIngredientsResponse>(API_ENDPOINTS.ingredients);
 };

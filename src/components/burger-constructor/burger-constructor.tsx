@@ -14,7 +14,7 @@ import { addIngredient, addBun, selectBun, selectIngredients, removeIngredient, 
 import { clearOrder, submitOrder } from '../../services/orderSlice';
 import { AppDispatch } from '../../services';
 
-import { Ingredient } from '../../types/burger';
+import { IIngredient } from '../../types/burger';
 
 import styles from './burger-constructor.module.css';
 
@@ -25,7 +25,7 @@ export const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(ingredient: Ingredient) {
+    drop(ingredient: IIngredient) {
       if (ingredient.type === 'bun') {
         dispatch(addBun(ingredient));
       } else {

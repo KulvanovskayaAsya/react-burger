@@ -5,17 +5,21 @@ import {
   logout as logoutRequest, 
   refreshToken as refreshTokenRequest,
   forgotPassword as forgotPasswordRequest,
-  resetPassword as resetPasswordRequest
+  resetPassword as resetPasswordRequest,
+  getUser as getUserRequest,
+  updateUser as updateUserRequest,
 } from '../api/auth';
-import { BaseSliceState, STATUS } from '../types/slices';
+import { IBaseSliceState, STATUS } from '../types/slices';
+import { RootState } from '.';
 
 interface IUser {
   email: string;
   name: string;
 }
 
-interface IAuthState extends BaseSliceState {
+interface IAuthState extends IBaseSliceState {
   user: IUser | null;
+  isAuthChecked: boolean;
   accessToken: string | null;
   refreshToken: string | null;
   successMessage: string;
@@ -23,6 +27,7 @@ interface IAuthState extends BaseSliceState {
 
 const initialState: IAuthState = {
   user: null,
+  isAuthChecked: false,
   accessToken: null,
   refreshToken: null,
   status: STATUS.IDLE,
@@ -51,7 +56,7 @@ export const logoutUser = createAsyncThunk(
   }
 );
 
-export const refreshTokenAction = createAsyncThunk(
+export const refreshToken = createAsyncThunk(
   'auth/refreshToken',
   async (token: string, { rejectWithValue }) => {
     return refreshTokenRequest({ token }).catch((error) => rejectWithValue(error.message));
@@ -69,6 +74,22 @@ export const resetPassword = createAsyncThunk(
   'auth/resetPassword',
   async ({ password, code }: { password: string; code: string }, { rejectWithValue }) => {
     return resetPasswordRequest(password, code).catch((error) => rejectWithValue(error.message));
+  }
+);
+
+export const getUser = createAsyncThunk(
+  'auth/getUserData',
+  async () => {
+    const response = await getUserRequest();
+    return response.user;
+  }
+);
+
+export const updateUser = createAsyncThunk(
+  'auth/updateUserData',
+  async ({ name, email }: { name: string; email: string }) => {
+    const response = await updateUserRequest(name, email);
+    return response.user;
   }
 );
 
@@ -95,6 +116,9 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.successMessage = 'Регистрация успешна';
+
+        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.status = STATUS.FAILED;
@@ -110,6 +134,9 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.successMessage = 'Авторизация успешна';
+
+        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.status = STATUS.FAILED;
@@ -125,23 +152,41 @@ const authSlice = createSlice({
         state.accessToken = null;
         state.refreshToken = null;
         state.successMessage = 'Выход из системы выполнен';
+        
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
       })
       .addCase(logoutUser.rejected, (state, action) => {
         state.status = STATUS.FAILED;
         state.error = action.payload as string;
+        state.isAuthChecked = false;
       })
-      .addCase(refreshTokenAction.pending, (state) => {
+      .addCase(refreshToken.pending, (state) => {
         state.status = STATUS.LOADING;
         state.error = null;
       })
-      .addCase(refreshTokenAction.fulfilled, (state, action) => {
+      .addCase(refreshToken.fulfilled, (state, action) => {
         state.status = STATUS.SUCCEEDED;
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
+
+        localStorage.setItem('accessToken', action.payload.accessToken);
+        localStorage.setItem('refreshToken', action.payload.refreshToken);
       })
-      .addCase(refreshTokenAction.rejected, (state, action) => {
+      .addCase(refreshToken.rejected, (state, action) => {
         state.status = STATUS.FAILED;
         state.error = action.payload as string;
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isAuthChecked = true;
+      })
+      .addCase(getUser.rejected, (state) => {
+        state.isAuthChecked = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.successMessage = 'Данные успешно обновлены';
       });
   },
 });
@@ -149,3 +194,6 @@ const authSlice = createSlice({
 export const { clearError, clearSuccessMessage } = authSlice.actions;
 
 export default authSlice.reducer;
+
+export const selectUser = (state: RootState) => state.auth.user;
+export const selectIsAuthChecked = (state: RootState) => state.auth.isAuthChecked;

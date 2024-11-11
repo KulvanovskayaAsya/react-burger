@@ -14,7 +14,7 @@ import { fetchIngredients, selectIngredientsByType, selectIngredientsStatus } fr
 import { setSelectedIngredient, clearSelectedIngredient, selectSelectedIngredient } from '../../services/ingredientDetailsSlice';
 
 import { STATUS } from '../../types/slices';
-import { Ingredient } from '../../types/burger';
+import { IIngredient } from '../../types/burger';
 
 import styles from './burger-ingredients.module.css';
 
@@ -73,7 +73,7 @@ export const BurgerIngredients: React.FC<BurgerIngredientsProps> = () => {
     }
   }, []);
 
-  const handleIngredientClick = useCallback((ingredient: Ingredient) => {
+  const handleIngredientClick = useCallback((ingredient: IIngredient) => {
     dispatch(setSelectedIngredient(ingredient));
     openModal();
   }, [openModal]);

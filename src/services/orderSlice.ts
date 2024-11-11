@@ -1,23 +1,26 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { postOrder } from '../api/order';
-import { Ingredient } from '../types/burger';
-import { BaseSliceState, STATUS } from '../types/slices';
+import { IIngredient } from '../types/burger';
+import { IBaseSliceState, STATUS } from '../types/slices';
 import { RootState } from '.';
 
-interface OrderState extends BaseSliceState {
+interface IOrderState extends IBaseSliceState {
   orderNumber: number | null;
 }
 
-const initialState: OrderState = {
+const initialState: IOrderState = {
   status: STATUS.IDLE,
   error: null,
   orderNumber: null,
 };
 
-export const submitOrder = createAsyncThunk('order/submitOrder', async (ingredients: Ingredient[]) => {
-  const response = await postOrder(ingredients);
-  return response.order.number;
-});
+export const submitOrder = createAsyncThunk(
+  'order/submitOrder', 
+  async (ingredients: IIngredient[]) => {
+    const response = await postOrder(ingredients);
+    return response.order.number;
+  }
+);
 
 const orderSlice = createSlice({
   name: 'order',

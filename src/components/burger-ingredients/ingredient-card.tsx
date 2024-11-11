@@ -8,13 +8,13 @@ import { Price } from '../price/price';
 import { selectIngredientCount } from '../../services/burgerConstructorSlice';
 import { RootState } from '../../services';
 
-import { Ingredient } from '../../types/burger';
+import { IIngredient } from '../../types/burger';
 
 import styles from './ingredient-card.module.css';
 
 interface IngredientCardProps {
-  ingredient: Ingredient;
-  onIngredientClick: (ingredient: Ingredient) => void;
+  ingredient: IIngredient;
+  onIngredientClick: (ingredient: IIngredient) => void;
 }
 
 export const IngredientCard: React.FC<IngredientCardProps> = ({ ingredient, onIngredientClick }) => {

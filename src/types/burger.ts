@@ -1,4 +1,4 @@
-export interface Ingredient {
+export interface IIngredient {
   _id: string;
   name: string;
   type: 'bun' | 'sauce' | 'main';

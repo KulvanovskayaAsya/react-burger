@@ -1,81 +1,92 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
-import commonStyles from '../../common.module.css';
-import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { useForm } from '../../hooks/useForm'
+
+import commonStyles from '../../common.module.css'
+import styles from './profile-info-page.module.css'
+import { AppDispatch } from '../../services'
+import { getUser, selectUser, updateUser } from '../../services/authSlice';
+
+interface IProfileForm {
+  name: string;
+  username: string;
+  password: string;
+}
 
 export const ProfileInfoPage: React.FC = () => {
   const navigate = useNavigate();
-  const [value, setValue] = React.useState('value')
-  const inputRef = React.useRef(null)
-  const onIconClick = () => {
-    setTimeout(() => inputRef?.current?.focus(), 0)
-    alert('Icon Click Callback')
-  }
+  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector(selectUser);
   
-  const handleCancelForm = useCallback(() => {
-    console.log('cancel');
-  }, []);
+  const { values, handleChange, resetForm } = useForm<IProfileForm>({
+    name: user?.name || '',
+    username: user?.email || '',
+    password: ''
+  });
 
-  const handleSubmitForm = useCallback(() => {
-    navigate('/')
-  }, [navigate]);
+  useEffect(() => {
+    dispatch(getUser());
+  }, [dispatch]);
+
+  const handleProfileEditSubmit = useCallback((e: React.FormEvent) => {
+    e.preventDefault();
+
+    dispatch(updateUser({ name: values.name, email: values.username }))
+      .then((action) => {
+        if (action.meta.requestStatus === 'fulfilled') {
+          navigate('/profile');
+        }
+      });
+  }, [dispatch, navigate, values]);
+  
+  const handleProfileEditCancel = useCallback(() => {
+    if (user) {
+      resetForm();
+    }
+  }, [user, resetForm]);
 
   return (
-    <form className={commonStyles.mainContainer}>
-      <h2>Профиль</h2>
-      <Input
-        type='text'
+    <form className={commonStyles.form} onSubmit={handleProfileEditSubmit}>
+      <EmailInput
+        value={values.name}
+        onChange={handleChange}
+        name='name'
         placeholder='Имя'
-        onChange={(e) => setValue(e.target.value)}
-        icon='EditIcon'
-        value={value}
-        name={'name'}
-        error={false}
-        ref={inputRef}
-        onIconClick={onIconClick}
-        errorText={'Проверьте введенный пароль'}
+        isIcon={true}
       />
-      <Input
-        type='text'
+      <EmailInput
+        value={values.username}
+        onChange={handleChange}
+        name='username'
         placeholder='Логин'
-        onChange={(e) => setValue(e.target.value)}
-        icon='EditIcon'
-        value={value}
-        name={'name'}
-        error={false}
-        ref={inputRef}
-        onIconClick={onIconClick}
-        errorText={'Проверьте введенный пароль'}
+        isIcon={true}
       />
-      <Input
-        type='password'
-        placeholder='Пароль'
-        onChange={(e) => setValue(e.target.value)}
+      <PasswordInput
+        value={values.password}
+        onChange={handleChange}
+        name='password'
         icon='EditIcon'
-        value={value}
-        name={'name'}
-        error={false}
-        ref={inputRef}
-        onIconClick={onIconClick}
-        errorText={'Проверьте введенный пароль'}
       />
-      <Button 
-        htmlType='button' 
-        type='secondary' 
-        size='medium'
-        onClick={handleCancelForm}
-      >
-        Отмена
-      </Button>
-      <Button 
-        htmlType='button' 
-        type='primary' 
-        size='medium'
-        onClick={handleSubmitForm}
-      >
-        Сохранить
-      </Button>
+      <div className={styles.formActions}>
+        <Button 
+          htmlType='button' 
+          type='secondary' 
+          size='medium'
+          onClick={handleProfileEditCancel}
+        >
+          Отмена
+        </Button>
+        <Button 
+          htmlType='submit' 
+          type='primary' 
+          size='medium'
+        >
+          Сохранить
+        </Button>
+      </div>
     </form>
   );
 };
