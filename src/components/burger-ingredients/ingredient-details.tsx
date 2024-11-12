@@ -3,12 +3,20 @@ import React from 'react';
 import { IIngredient } from '../../types/burger';
 
 import styles from './ingredient-details.module.css';
+import { useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../services';
+import { selectIngredientById } from '../../services/burgerIngredientsSlice';
 
 interface IngredientDetailsProps {
-  ingredient: IIngredient;
 }
 
-export const IngredientDetails: React.FC<IngredientDetailsProps> = ({ ingredient }) => {
+export const IngredientDetails: React.FC<IngredientDetailsProps> = () => {
+  const { ingredientId } = useParams<{ ingredientId: string }>();
+  const ingredient = useSelector((state: RootState) => selectIngredientById(state, ingredientId!));
+
+  if (!ingredient) return null;
+
   const { image_large: image, name, calories, proteins, fat, carbohydrates } = ingredient;
 
   return (

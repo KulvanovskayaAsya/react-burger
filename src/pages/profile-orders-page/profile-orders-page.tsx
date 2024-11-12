@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const OrdersHistoryPage: React.FC = () => {
+export const ProfileOrdersPage: React.FC = () => {
   return (
     <div>
       <h2>История заказов</h2>

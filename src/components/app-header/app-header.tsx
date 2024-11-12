@@ -10,16 +10,30 @@ export const AppHeader = () => {
       <nav className={commonStyles.mainContainer}>
         <ul className={styles.navList}>
           <li>
-            <NavLink to='/' className={`${styles.navLink} ${styles.active}`}>
-              <BurgerIcon type='primary' />
-              <p className={styles.text}>Конструктор</p>
+            <NavLink 
+              to='/' 
+              className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
+            >
+              {({ isActive }) => (
+                <>
+                  <BurgerIcon type={isActive ? 'primary' : 'secondary'} />
+                  <p className={styles.text}>Конструктор</p>
+                </>
+              )}
             </NavLink>
           </li>
 
           <li className={styles.navItem}>
-            <NavLink to='/orders' className={styles.navLink}>
-              <ListIcon type='secondary' />
-              <p className={styles.text}>Лента заказов</p>
+            <NavLink 
+              to='/orders' 
+              className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
+            >
+              {({ isActive }) => (
+                <>
+                  <ListIcon type={isActive ? 'primary' : 'secondary'} />
+                  <p className={styles.text}>Лента заказов</p>
+                </>
+              )}
             </NavLink>
           </li>
 
@@ -30,9 +44,16 @@ export const AppHeader = () => {
           </li>
 
           <li className={styles.navItem}>
-            <NavLink to='/profile' className={styles.navLink}>
-              <ProfileIcon type='secondary' />
-              <p className={styles.text}>Личный кабинет</p>
+            <NavLink 
+              to='/profile' 
+              className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
+            >
+              {({ isActive }) => (
+                <>
+                  <ProfileIcon type={isActive ? 'primary' : 'secondary'} />
+                  <p className={styles.text}>Личный кабинет</p>
+                </>
+              )}
             </NavLink>
           </li>
         </ul>

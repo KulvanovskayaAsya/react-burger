@@ -49,3 +49,8 @@ export const selectIngredientsByType = createSelector(
   [selectIngredients, (_: RootState, type: string) => type],
   (ingredients, type) => ingredients?.filter((ingredient) => ingredient.type === type)
 );
+
+export const selectIngredientById = createSelector(
+  [selectIngredients, (_: RootState, id: string) => id],
+  (ingredients, id) => ingredients.find((ingredient) => ingredient._id === id)
+);

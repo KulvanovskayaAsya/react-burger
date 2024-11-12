@@ -36,7 +36,7 @@ export const ProfilePage: React.FC = () => {
           Профиль
         </NavLink>
         <NavLink 
-          to='order-history' 
+          to='orders' 
           className={({ isActive }) => 
             `${styles.link} ${isActive ? styles.activeLink : ''}`
           }

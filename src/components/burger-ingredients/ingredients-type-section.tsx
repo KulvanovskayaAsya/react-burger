@@ -8,14 +8,12 @@ interface IngredientsTypeSectionProps {
   type: string;
   title: string;
   ingredients: IIngredient[];
-  onIngredientClick: (ingredient: IIngredient) => void;
 }
 
 export const IngredientsTypeSection: React.FC<IngredientsTypeSectionProps> = ({
   type,
   title,
-  ingredients,
-  onIngredientClick
+  ingredients
 }) => {
   return (
     <section className={styles.section} id={type}>
@@ -26,7 +24,6 @@ export const IngredientsTypeSection: React.FC<IngredientsTypeSectionProps> = ({
           <IngredientCard
             key={item._id}
             ingredient={item}
-            onIngredientClick={onIngredientClick}
           />
         ))}
       </div>
