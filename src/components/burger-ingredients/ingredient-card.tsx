@@ -28,10 +28,10 @@ export const IngredientCard: React.FC<IngredientCardProps> = ({ ingredient }) =>
 
   return (
     <Link
-    key={ingredient._id}
-    to={`/ingredients/${ingredient._id}`}
-    state={{ background: location }}
-    className={styles.link}
+      key={ingredient._id}
+      to={`/ingredients/${ingredient._id}`}
+      state={{ background: location }}
+      className={styles.link}
     >
       <article
         className={styles.card}
