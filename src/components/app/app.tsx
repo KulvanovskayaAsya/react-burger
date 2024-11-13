@@ -10,6 +10,7 @@ import {
   ProfilePage,
   ProfileInfoPage,
   ProfileOrdersPage,
+  ErrorPage
 } from '../../pages';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
 
@@ -102,7 +103,7 @@ function App() {
             <Route path='orders' element={<ProfileOrdersPage />}/>
           </Route>
 
-          {/* <Route path='*' element={<ErrorPage />} /> */}
+          <Route path='*' element={<ErrorPage />} />
         </Route>
       </Routes>
 

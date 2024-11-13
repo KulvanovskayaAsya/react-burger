@@ -10,3 +10,5 @@ export { ResetPasswordPage } from './reset-password-page/reset-password-page'
 export { ProfilePage } from './profile-page/profile-page'
 export { ProfileInfoPage } from './profile-info-page/profile-info-page'
 export { ProfileOrdersPage } from './profile-orders-page/profile-orders-page'
+
+export { ErrorPage } from './error-page/error-page'
