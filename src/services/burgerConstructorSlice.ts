@@ -2,9 +2,11 @@ import { createSlice, PayloadAction, nanoid, createSelector } from '@reduxjs/too
 import { IIngredient } from '../types/burger';
 import { RootState } from '.';
 
+type IConstructorIngredient = IIngredient & { key: string };
+
 interface IBurgerConstructorState {
   bun: IIngredient | null;
-  ingredients: Array<IIngredient & { key: string }>;
+  ingredients: Array<IConstructorIngredient>;
 }
 const initialState: IBurgerConstructorState = {
   bun: null,
@@ -23,7 +25,7 @@ const burgerConstructorSlice = createSlice({
       state.bun = action.payload;
     },
     addIngredient: {
-      reducer: (state, action: PayloadAction<IIngredient & { key: string }>) => {
+      reducer: (state, action: PayloadAction<IConstructorIngredient>) => {
         state.ingredients.push(action.payload);
       },
       prepare: (ingredient: IIngredient) => {

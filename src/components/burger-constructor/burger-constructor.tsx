@@ -10,7 +10,17 @@ import { Modal } from '../modal/modal';
 import { OrderDetails } from './order-details';
 import { DraggableIngredient } from './draggable-ingredient';
 
-import { addIngredient, addBun, selectBun, selectIngredients, removeIngredient, clearConstructorIngredients, selectTotalPrice, moveIngredient } from '../../services/burgerConstructorSlice';
+import { 
+  addIngredient, 
+  moveIngredient,
+  removeIngredient, 
+  addBun,
+  clearConstructorIngredients,
+  selectBun,
+  selectIngredients, 
+  selectTotalPrice
+} from '../../services/burgerConstructorSlice';
+
 import { clearOrder, submitOrder } from '../../services/orderSlice';
 import { AppDispatch } from '../../services';
 

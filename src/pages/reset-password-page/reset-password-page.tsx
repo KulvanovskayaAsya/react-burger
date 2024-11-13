@@ -1,12 +1,9 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 
 import commonStyles from '../../common.module.css';
 import { Button, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../services';
+import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
-import { resetPassword } from '../../services/authSlice';
 import { useAuth } from '../../hooks/useAuth';
 
 interface IResetPasswordForm {
