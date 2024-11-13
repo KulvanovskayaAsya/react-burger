@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { 
-  register as registerRequest, 
-  login as loginRequest, 
-  logout as logoutRequest, 
+import {
+  register as registerRequest,
+  login as loginRequest,
+  logout as logoutRequest,
   refreshToken as refreshTokenRequest,
   forgotPassword as forgotPasswordRequest,
   resetPassword as resetPasswordRequest,
@@ -11,11 +11,7 @@ import {
 } from '../api/auth';
 import { IBaseSliceState, STATUS } from '../types/slices';
 import { RootState } from '.';
-
-interface IUser {
-  email: string;
-  name: string;
-}
+import { IUser } from '../types/api';
 
 interface IAuthState extends IBaseSliceState {
   user: IUser | null;
@@ -152,7 +148,7 @@ const authSlice = createSlice({
         state.accessToken = null;
         state.refreshToken = null;
         state.successMessage = 'Выход из системы выполнен';
-        
+
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
       })

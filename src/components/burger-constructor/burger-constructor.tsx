@@ -17,10 +17,15 @@ import { AppDispatch } from '../../services';
 import { IIngredient } from '../../types/burger';
 
 import styles from './burger-constructor.module.css';
+import { useAuth } from '../../hooks/useAuth';
+import { useLocation, useNavigate } from 'react-router';
 
 interface BurgerConstructorProps {}
 
 export const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user } = useAuth();
   const dispatch = useDispatch<AppDispatch>();
 
   const [{ isHover }, dropTarget] = useDrop({
@@ -44,6 +49,11 @@ export const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
   const ingredients = useSelector(selectIngredients);
 
   const handleOrderSubmit = () => {
+    if (!user) {
+      navigate('/login', { state: { from: location } });
+      return;
+    }
+
     if (bun && ingredients.length) {
       dispatch(submitOrder([bun, ...ingredients, bun]))
       openModal();
@@ -62,7 +72,7 @@ export const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
 
   return (
     <div className={styles.container}>
-      <div 
+      <div
         ref={dropTarget}
         className={`${styles.constructorWrapper} ${isHover ? styles.hovered : ''}`}
       >

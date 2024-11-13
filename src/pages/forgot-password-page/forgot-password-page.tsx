@@ -1,32 +1,24 @@
 import React, { useCallback } from 'react';
 
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+import { useForm } from '../../hooks/useForm';
+import { useAuth } from '../../hooks/useAuth';
 
 import commonStyles from '../../common.module.css';
-import { useForm } from '../../hooks/useForm';
-import { useDispatch } from 'react-redux';
-import { AppDispatch } from '../../services';
-import { forgotPassword } from '../../services/authSlice';
-
 interface IForgotPasswordForm {
   email: string;
 }
 
 export const ForgotPasswordPage: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  
+  const { forgotPassword } = useAuth();
   const { values, handleChange } = useForm<IForgotPasswordForm>({ email: '' });
 
-  const handleForgotPasswordSubmit= useCallback((e: React.FormEvent) => {
+  const handleForgotPasswordSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(forgotPassword(values.email)).then((action) => {
-      if (action.meta.requestStatus === 'fulfilled') {
-        navigate('/reset-password');
-      }
-    });
-  }, [dispatch, navigate, values]);
+    forgotPassword(values.email);
+  }, [forgotPassword, values]);
 
   return (
     <div className={commonStyles.formPageContainer}>
@@ -37,9 +29,9 @@ export const ForgotPasswordPage: React.FC = () => {
           onChange={handleChange}
           name='email'
         />
-        <Button 
-          htmlType='submit' 
-          type='primary' 
+        <Button
+          htmlType='submit'
+          type='primary'
           size='medium'
         >
           Восстановить

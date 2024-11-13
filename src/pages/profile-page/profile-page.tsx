@@ -1,49 +1,41 @@
 import React, { useCallback } from 'react';
-import { NavLink, Outlet, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import styles from './profile-page.module.css';
-import { AppDispatch } from '../../services';
-import { useDispatch } from 'react-redux';
-import { logoutUser } from '../../services/authSlice';
+import { useAuth } from '../../hooks/useAuth';
 
 export const ProfilePage: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  
+  const { logout } = useAuth();
+
   const handleLogout = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     const refreshToken = localStorage.getItem('refreshToken');
 
     if(refreshToken) {
-      dispatch(logoutUser(refreshToken))
-        .then((action) => {
-          if (action.meta.requestStatus === 'fulfilled') {
-            navigate('/');
-          }
-        });
+      logout();
     }
   }, []);
 
   return (
     <>
       <aside className={styles.sidebar}>
-        <NavLink 
-          to='' 
+        <NavLink
+          to=''
           end
-          className={({ isActive }) => 
+          className={({ isActive }) =>
             `${styles.link} ${isActive ? styles.activeLink : ''}`
           }
         >
           Профиль
         </NavLink>
-        <NavLink 
-          to='orders' 
-          className={({ isActive }) => 
+        <NavLink
+          to='orders'
+          className={({ isActive }) =>
             `${styles.link} ${isActive ? styles.activeLink : ''}`
           }
         >
           История заказов
         </NavLink>
-        <NavLink 
+        <NavLink
           to='/login'
           className={`${styles.link} ${styles.logoutLink}`}
           onClick={handleLogout}

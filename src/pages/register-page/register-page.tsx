@@ -1,11 +1,9 @@
 import React, { useCallback } from 'react';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { registerUser } from '../../services/authSlice';
+import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
-import { useDispatch } from 'react-redux';
+import { useAuth } from '../../hooks/useAuth';
 import commonStyles from '../../common.module.css';
-import { AppDispatch } from '../../services';
 
 interface IRegisterForm {
   name: string;
@@ -14,9 +12,7 @@ interface IRegisterForm {
 }
 
 export const RegisterPage: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  
+  const { register } = useAuth();
   const { values, handleChange } = useForm<IRegisterForm>({
     name: '',
     email: '',
@@ -25,13 +21,8 @@ export const RegisterPage: React.FC = () => {
 
   const handleRegisterSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(registerUser(values))
-      .then((action) => {
-        if (action.meta.requestStatus === 'fulfilled') {
-          navigate('/');
-        }
-      });
-  }, [dispatch, navigate, values]);
+    register(values.email, values.password, values.name);
+  }, [register, values]);
 
   return (
     <div className={commonStyles.formPageContainer}>
@@ -54,9 +45,9 @@ export const RegisterPage: React.FC = () => {
           onChange={handleChange}
           name='password'
         />
-        <Button 
-          htmlType='submit' 
-          type='primary' 
+        <Button
+          htmlType='submit'
+          type='primary'
           size='medium'
         >
           Зарегистрироваться

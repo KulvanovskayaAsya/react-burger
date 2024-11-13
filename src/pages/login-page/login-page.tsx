@@ -2,11 +2,9 @@ import React, { useCallback } from 'react';
 
 import commonStyles from '../../common.module.css';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate } from 'react-router-dom';
-import { AppDispatch } from '../../services';
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../../services/authSlice';
+import { Link } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
+import { useAuth } from '../../hooks/useAuth';
 
 interface ILoginForm {
   email: string;
@@ -14,9 +12,7 @@ interface ILoginForm {
 }
 
 export const LoginPage: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
-  
+  const { login } = useAuth();
   const { values, handleChange } = useForm<ILoginForm>({
     email: '',
     password: ''
@@ -24,13 +20,8 @@ export const LoginPage: React.FC = () => {
 
   const handleLoginSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(loginUser(values))
-      .then((action) => {
-        if (action.meta.requestStatus === 'fulfilled') {
-          navigate('/');
-        }
-      });
-  }, [dispatch, navigate, values]);
+    login(values.email, values.password);
+  }, [login, values]);
 
   return (
     <div className={commonStyles.formPageContainer}>
@@ -46,9 +37,9 @@ export const LoginPage: React.FC = () => {
           onChange={handleChange}
           name='password'
         />
-        <Button 
-          htmlType='submit' 
-          type='primary' 
+        <Button
+          htmlType='submit'
+          type='primary'
           size='medium'
         >
           Войти
