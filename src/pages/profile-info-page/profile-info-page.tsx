@@ -1,6 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
-import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useForm } from '../../hooks/useForm'
 
 import commonStyles from '../../common.module.css'
@@ -14,6 +14,7 @@ interface IProfileForm {
 }
 
 export const ProfileInfoPage: React.FC = () => {
+  const [isNameEditing, setIsNameEditing] = useState<boolean>(false);
   const { user, updateUserProfile } = useAuth();
 
   const { values, handleChange, resetForm } = useForm<IProfileForm>({
@@ -22,25 +23,33 @@ export const ProfileInfoPage: React.FC = () => {
     password: ''
   });
 
+  const isProfileEditing = useMemo(() => {
+    return values.name !== user?.name || values.username !== user?.email || values.password !== '';
+  }, [values, user]);
+
   const handleProfileEditSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    updateUserProfile(values.name, values.username);
+    updateUserProfile(values.name, values.username, values.password);
   }, [updateUserProfile, values]);
 
   const handleProfileEditCancel = useCallback(() => {
     if (user) {
       resetForm();
+      setIsNameEditing(false);
     }
   }, [user, resetForm]);
 
   return (
     <form className={commonStyles.form} onSubmit={handleProfileEditSubmit}>
-      <EmailInput
+      <Input
         value={values.name}
         onChange={handleChange}
         name='name'
         placeholder='Имя'
-        isIcon={true}
+        icon='EditIcon'
+        onIconClick={() => setIsNameEditing(true)}
+        onBlur={() => setIsNameEditing(false)}
+        disabled={!isNameEditing}
       />
       <EmailInput
         value={values.username}
@@ -55,23 +64,25 @@ export const ProfileInfoPage: React.FC = () => {
         name='password'
         icon='EditIcon'
       />
-      <div className={styles.formActions}>
-        <Button
-          htmlType='button'
-          type='secondary'
-          size='medium'
-          onClick={handleProfileEditCancel}
-        >
-          Отмена
-        </Button>
-        <Button
-          htmlType='submit'
-          type='primary'
-          size='medium'
-        >
-          Сохранить
-        </Button>
-      </div>
+      {isProfileEditing && (
+        <div className={styles.formActions}>
+          <Button
+            htmlType='button'
+            type='secondary'
+            size='medium'
+            onClick={handleProfileEditCancel}
+          >
+            Отмена
+          </Button>
+          <Button
+            htmlType='submit'
+            type='primary'
+            size='medium'
+          >
+            Сохранить
+          </Button>
+        </div>
+      )} 
     </form>
   );
 };

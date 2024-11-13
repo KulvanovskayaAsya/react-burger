@@ -83,13 +83,13 @@ export const getUser = async (): Promise<IUserResponse> => {
   });
 };
 
-export const updateUser = async (name: string, email: string): Promise<IUserResponse> => {
+export const updateUser = async (name: string, email: string, password: string): Promise<IUserResponse> => {
   return request<IUserResponse>(API_ENDPOINTS.auth.user, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
       authorization: localStorage.getItem('accessToken') || '',
     },
-    body: JSON.stringify({ name, email }),
+    body: JSON.stringify({ name, email, password }),
   });
 };

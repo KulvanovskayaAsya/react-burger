@@ -83,8 +83,8 @@ export const getUser = createAsyncThunk(
 
 export const updateUser = createAsyncThunk(
   'auth/updateUserData',
-  async ({ name, email }: { name: string; email: string }) => {
-    const response = await updateUserRequest(name, email);
+  async ({ name, email, password }: { name: string; email: string, password: string }) => {
+    const response = await updateUserRequest(name, email, password);
     return response.user;
   }
 );

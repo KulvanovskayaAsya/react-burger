@@ -27,7 +27,7 @@ interface IUseAuthReturn {
   logout: () => void;
   refreshAuthToken: () => void;
   fetchUser: () => void;
-  updateUserProfile: (name: string, email: string) => void;
+  updateUserProfile: (name: string, email: string, password: string) => void;
   forgotPassword: (email: string) => void;
   resetPassword: (password: string, code: string) => void;
 }
@@ -75,8 +75,8 @@ export const useAuth = (): IUseAuthReturn => {
     dispatch(getUser());
   }, [dispatch]);
 
-  const updateUserProfile = useCallback((name: string, email: string) => {
-    dispatch(updateUser({ name, email }));
+  const updateUserProfile = useCallback((name: string, email: string, password: string) => {
+    dispatch(updateUser({ name, email, password }));
   }, [dispatch]);
 
   const forgotPassword = useCallback((email: string) => {
