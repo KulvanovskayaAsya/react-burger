@@ -1,30 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import { useModal } from '../../hooks/useModal';
 import useScrollSpy from '../../hooks/useScrollSpy';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsTypeSection } from './ingredients-type-section';
-import { IngredientDetails } from './ingredient-details';
-import { Modal } from '../modal/modal';
 
-import { AppDispatch, RootState } from '../../services';
-import { fetchIngredients, selectIngredientsByType, selectIngredientsStatus } from '../../services/burgerIngredientsSlice';
-import { setSelectedIngredient, clearSelectedIngredient, selectSelectedIngredient } from '../../services/ingredientDetailsSlice';
+import { RootState } from '../../services';
 
 import { STATUS } from '../../types/slices';
-import { Ingredient } from '../../types/burger';
 
 import styles from './burger-ingredients.module.css';
+import { selectIngredientsByType, selectIngredientsStatus } from '../../services/burgerIngredientsSlice';
 
 interface BurgerIngredientsProps {}
 
 export const BurgerIngredients: React.FC<BurgerIngredientsProps> = () => {
-  const dispatch = useDispatch<AppDispatch>();
-
   const status = useSelector(selectIngredientsStatus);
-  const selectedIngredient = useSelector(selectSelectedIngredient);
 
   const buns = useSelector((state: RootState) => selectIngredientsByType(state, 'bun'));
   const mains = useSelector((state: RootState) => selectIngredientsByType(state, 'main'));
@@ -36,16 +28,9 @@ export const BurgerIngredients: React.FC<BurgerIngredientsProps> = () => {
     { title: 'Соусы', type: 'sauce', ingredients: sauces },
   ];
 
-  useEffect(() => {
-    if (status === STATUS.IDLE) {
-      dispatch(fetchIngredients());
-    }
-  }, [status]);
-
   const [current, setCurrent] = useState('bun');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const { isOpen, openModal, closeModal } = useModal();
   const activeTab = useScrollSpy(sections.map(({ type }) => type), { root: scrollContainerRef.current, rootMargin: '0px 0px -90% 0px' });
 
   useEffect(() => {
@@ -73,16 +58,6 @@ export const BurgerIngredients: React.FC<BurgerIngredientsProps> = () => {
     }
   }, []);
 
-  const handleIngredientClick = useCallback((ingredient: Ingredient) => {
-    dispatch(setSelectedIngredient(ingredient));
-    openModal();
-  }, [openModal]);
-
-  const closeModalHandler = () => {
-    dispatch(clearSelectedIngredient());
-    closeModal();
-  };
-
   if (status === STATUS.LOADING) {
     return <p>Да, вы голодны, ингредиенты уже летят к вам...</p>;
   }
@@ -108,16 +83,9 @@ export const BurgerIngredients: React.FC<BurgerIngredientsProps> = () => {
             title={title}
             type={type}
             ingredients={ingredients}
-            onIngredientClick={handleIngredientClick}
           />
         ))}
       </div>
-
-      {isOpen && selectedIngredient && (
-        <Modal title="Детали ингредиента" onClose={closeModalHandler}>
-          <IngredientDetails ingredient={selectedIngredient} />
-        </Modal>
-      )}
     </>
   );
 };

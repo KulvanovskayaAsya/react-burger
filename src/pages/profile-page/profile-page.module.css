@@ -1,0 +1,22 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  composes: text text_type_main-large text_color_inactive from global;
+  padding: 24px;
+}
+
+.activeLink {
+  color: var(--text-primary-color);
+}
+
+.caption {
+  composes: text text_type_main-default text_color_inactive from global;
+  padding: 24px;
+}
+
+.button {
+  background-color: transparent;
+}

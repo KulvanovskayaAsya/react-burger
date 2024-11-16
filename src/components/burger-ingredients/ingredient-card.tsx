@@ -8,38 +8,42 @@ import { Price } from '../price/price';
 import { selectIngredientCount } from '../../services/burgerConstructorSlice';
 import { RootState } from '../../services';
 
-import { Ingredient } from '../../types/burger';
+import { IIngredient } from '../../types/burger';
 
 import styles from './ingredient-card.module.css';
+import { Link, useLocation } from 'react-router-dom';
 
 interface IngredientCardProps {
-  ingredient: Ingredient;
-  onIngredientClick: (ingredient: Ingredient) => void;
+  ingredient: IIngredient;
 }
 
-export const IngredientCard: React.FC<IngredientCardProps> = ({ ingredient, onIngredientClick }) => {
+export const IngredientCard: React.FC<IngredientCardProps> = ({ ingredient }) => {
+  const location = useLocation();
+
   const count = useSelector((state: RootState) => selectIngredientCount(state, ingredient._id, ingredient.type));
   const [, dragRef] = useDrag({
     type: 'ingredient',
     item: ingredient
   });
 
-  const handleClick = () => {
-    onIngredientClick(ingredient);
-  };
-
   return (
-    <article
-      className={styles.card}
-      ref={dragRef}
-      onClick={handleClick}
+    <Link
+      key={ingredient._id}
+      to={`/ingredients/${ingredient._id}`}
+      state={{ background: location }}
+      className={styles.link}
     >
-      <img className={styles.cardImage} src={ingredient.image} alt={`Внешний вид ингредиента ${ingredient.name}`} />
-      <Price price={ingredient.price} />
-      <p className={styles.cardTitle}>
-        {ingredient.name}
-      </p>
-      {count > 0 && <Counter count={count} size='default' extraClass='m-1' />}
-    </article>
+      <article
+        className={styles.card}
+        ref={dragRef}
+      >
+        <img className={styles.cardImage} src={ingredient.image} alt={`Внешний вид ингредиента ${ingredient.name}`} />
+        <Price price={ingredient.price} />
+        <p className={styles.cardTitle}>
+          {ingredient.name}
+        </p>
+        {count > 0 && <Counter count={count} size='default' extraClass='m-1' />}
+      </article>
+    </Link>
   );
 }

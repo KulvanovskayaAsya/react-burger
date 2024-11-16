@@ -2,6 +2,7 @@ import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-dev
 
 import commonStyles from '../../common.module.css';
 import styles from './app-header.module.css';
+import { NavLink } from 'react-router-dom';
 
 export const AppHeader = () => {
   return (
@@ -9,30 +10,51 @@ export const AppHeader = () => {
       <nav className={commonStyles.mainContainer}>
         <ul className={styles.navList}>
           <li>
-            <a href='/' className={`${styles.navLink} ${styles.active}`}>
-              <BurgerIcon type='primary' />
-              <p className={styles.text}>Конструктор</p>
-            </a>
+            <NavLink 
+              to='/' 
+              className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
+            >
+              {({ isActive }) => (
+                <>
+                  <BurgerIcon type={isActive ? 'primary' : 'secondary'} />
+                  <p className={styles.text}>Конструктор</p>
+                </>
+              )}
+            </NavLink>
           </li>
 
           <li className={styles.navItem}>
-            <a href='/orders' className={styles.navLink}>
-              <ListIcon type='secondary' />
-              <p className={styles.text}>Лента заказов</p>
-            </a>
+            <NavLink 
+              to='/orders' 
+              className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
+            >
+              {({ isActive }) => (
+                <>
+                  <ListIcon type={isActive ? 'primary' : 'secondary'} />
+                  <p className={styles.text}>Лента заказов</p>
+                </>
+              )}
+            </NavLink>
           </li>
 
           <li className={`${styles.navItem} ${styles.logo}`}>
-            <a href='/' className={styles.logoLink}>
+            <NavLink to='/' className={styles.logoLink}>
               <Logo />
-            </a>
+            </NavLink>
           </li>
 
           <li className={styles.navItem}>
-            <a href='/profile' className={styles.navLink}>
-              <ProfileIcon type='secondary' />
-              <p className={styles.text}>Личный кабинет</p>
-            </a>
+            <NavLink 
+              to='/profile' 
+              className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
+            >
+              {({ isActive }) => (
+                <>
+                  <ProfileIcon type={isActive ? 'primary' : 'secondary'} />
+                  <p className={styles.text}>Личный кабинет</p>
+                </>
+              )}
+            </NavLink>
           </li>
         </ul>
       </nav>

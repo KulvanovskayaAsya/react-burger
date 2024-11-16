@@ -1,8 +1,8 @@
-import { ORDERS_API_URL } from '../constants/api-constants';
-import { Ingredient } from '../types/burger';
+import { API_ENDPOINTS } from './endpoints';
+import { IIngredient } from '../types/burger';
 import { request } from './request';
 
-interface OrderResponse {
+interface IOrderResponse {
   name: string;
   order: {
     number: number;
@@ -10,13 +10,14 @@ interface OrderResponse {
   success: boolean;
 }
 
-export const postOrder = async (orderIngredients: Ingredient[]): Promise<OrderResponse> => {
+export const postOrder = async (orderIngredients: IIngredient[]): Promise<IOrderResponse> => {
   const ingredientIds = orderIngredients.map(ingredient => ingredient._id);
 
-  return request<OrderResponse>(ORDERS_API_URL, {
+  return request<IOrderResponse>(API_ENDPOINTS.orders, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      authorization: localStorage.getItem('accessToken') || '',
     },
     body: JSON.stringify({
       ingredients: ingredientIds,
