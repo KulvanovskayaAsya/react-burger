@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export const useForm = <T extends { [key: string]: any }>(initialValues: T) => {
+export const useForm = <T extends Record<string, any>>(initialValues: T) => {
   const [values, setValues] = useState(initialValues);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

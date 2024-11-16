@@ -4,13 +4,13 @@ import { IIngredient } from '../../types/burger';
 
 import styles from './ingredients-type-section.module.css';
 
-interface IngredientsTypeSectionProps {
+interface IIngredientsTypeSectionProps {
   type: string;
   title: string;
   ingredients: IIngredient[];
 }
 
-export const IngredientsTypeSection: React.FC<IngredientsTypeSectionProps> = ({
+export const IngredientsTypeSection: React.FC<IIngredientsTypeSectionProps> = ({
   type,
   title,
   ingredients

@@ -10,9 +10,18 @@ interface IErrorResponse {
   message: string;
 }
 
-const checkResponse = async (res: Response): Promise<any> => {
+interface IResponse<T> {
+  success: boolean;
+  data: T;
+}
+
+function isErrorResponse(data: any): data is IErrorResponse {
+  return 'message' in data;
+}
+
+const checkResponse = async <T>(res: Response): Promise<IResponse<T> | IErrorResponse> => {
   const data = await res.json();
-  return res.ok ? data : Promise.reject(data as IErrorResponse);
+  return res.ok ? { success: true, data } : { message: data.message || "Unknown error" };
 };
 
 export const refreshToken = async (): Promise<IRefreshTokenResponse> => {
@@ -28,24 +37,30 @@ export const refreshToken = async (): Promise<IRefreshTokenResponse> => {
       "Content-Type": "application/json;charset=utf-8",
     },
     body: JSON.stringify({ token: refreshToken }),
-  })
+  });
 
-  const refreshData: IRefreshTokenResponse = await checkResponse(response);
+  const refreshData = await checkResponse<IRefreshTokenResponse>(response);
 
-  if (!refreshData.success) {
+  if (isErrorResponse(refreshData)) {
     return Promise.reject(refreshData);
   }
 
-  localStorage.setItem("refreshToken", refreshData.refreshToken);
-  localStorage.setItem("accessToken", refreshData.accessToken);
+  localStorage.setItem("refreshToken", refreshData.data.refreshToken);
+  localStorage.setItem("accessToken", refreshData.data.accessToken);
 
-  return refreshData;
+  return refreshData.data;
 };
 
 export const fetchWithRefresh = async <T>(url: string, options: RequestInit = {}): Promise<T> => {
   try {
     const response = await fetch(url, options);
-    return await checkResponse(response);
+    const data = await checkResponse<T>(response);
+
+    if (isErrorResponse(data)) {
+      return Promise.reject(data);
+    }
+
+    return data.data;
   } catch (error) {
     const err = error as IErrorResponse;
 
@@ -59,7 +74,13 @@ export const fetchWithRefresh = async <T>(url: string, options: RequestInit = {}
         };
 
         const response = await fetch(url, options);
-        return await checkResponse(response);
+        const data = await checkResponse<T>(response);
+
+        if (isErrorResponse(data)) {
+          return Promise.reject(data);
+        }
+
+        return data.data;
       } catch (refreshError) {
         return Promise.reject(refreshError);
       }

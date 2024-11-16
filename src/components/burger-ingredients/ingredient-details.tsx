@@ -1,17 +1,12 @@
 import React from 'react';
 
-import { IIngredient } from '../../types/burger';
-
 import styles from './ingredient-details.module.css';
 import { useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../services';
 import { selectIngredientById } from '../../services/burgerIngredientsSlice';
 
-interface IngredientDetailsProps {
-}
-
-export const IngredientDetails: React.FC<IngredientDetailsProps> = () => {
+export const IngredientDetails: React.FC = () => {
   const { ingredientId } = useParams<{ ingredientId: string }>();
   const ingredient = useSelector((state: RootState) => selectIngredientById(state, ingredientId!));
 
