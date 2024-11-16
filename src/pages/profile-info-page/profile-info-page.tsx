@@ -23,9 +23,7 @@ export const ProfileInfoPage: React.FC = () => {
     password: ''
   });
 
-  const isProfileEditing = useMemo(() => {
-    return values.name !== user?.name || values.username !== user?.email || values.password !== '';
-  }, [values, user]);
+  const isProfileEditing = values.name !== user?.name || values.username !== user?.email || values.password !== '';
 
   const handleProfileEditSubmit = useCallback((e: React.FormEvent) => {
     e.preventDefault();
@@ -82,7 +80,7 @@ export const ProfileInfoPage: React.FC = () => {
             Сохранить
           </Button>
         </div>
-      )} 
+      )}
     </form>
   );
 };
