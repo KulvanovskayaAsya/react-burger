@@ -3,13 +3,13 @@ import { useDrag, useDrop } from 'react-dnd';
 
 import styles from './draggable-ingredient.module.css';
 
-interface DraggableIngredientProps {
+interface IDraggableIngredientProps {
   index: number;
   onMove: (fromIndex: number, toIndex: number) => void;
   children: React.ReactNode;
 }
 
-export const DraggableIngredient: React.FC<DraggableIngredientProps> = ({
+export const DraggableIngredient: React.FC<IDraggableIngredientProps> = ({
   index,
   onMove,
   children,

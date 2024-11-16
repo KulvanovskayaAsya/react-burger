@@ -6,7 +6,7 @@ import ModalOverlay from './modal-overlay';
 
 import styles from './modal.module.css';
 
-interface ModalProps {
+interface IModalProps {
   title?: string;
   onClose: () => void;
   children: ReactNode;
@@ -14,7 +14,7 @@ interface ModalProps {
 
 const modalRoot = document.getElementById('modals') as HTMLElement; // Портал
 
-export const Modal: React.FC<ModalProps> = ({ title, onClose, children }) => {
+export const Modal: React.FC<IModalProps> = ({ title, onClose, children }) => {
   return ReactDOM.createPortal(
     <>
       <ModalOverlay onClick={onClose} />
