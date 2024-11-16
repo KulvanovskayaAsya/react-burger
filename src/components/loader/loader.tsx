@@ -1,6 +1,6 @@
 import React from 'react';
 import loaderSVG from '../../assets/loader.svg';
-import styles from './Loader.module.css';
+import styles from './loader.module.css';
 
 interface ILoaderProps {
   size?: number;
