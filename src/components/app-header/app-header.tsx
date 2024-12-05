@@ -25,7 +25,7 @@ export const AppHeader = () => {
 
           <li className={styles.navItem}>
             <NavLink 
-              to='/orders' 
+              to='/feed' 
               className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
             >
               {({ isActive }) => (

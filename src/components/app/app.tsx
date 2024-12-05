@@ -2,7 +2,8 @@ import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
 
 import {
   HomePage,
-  OrdersPage,
+  FeedPage,
+  FeedDetails,
   LoginPage,
   RegisterPage,
   ForgotPasswordPage,
@@ -10,6 +11,7 @@ import {
   ProfilePage,
   ProfileInfoPage,
   ProfileOrdersPage,
+  ProfileOrderDetails,
   ErrorPage
 } from '../../pages';
 import { MainLayout } from '../../layouts/main-layout/main-layout';
@@ -56,7 +58,9 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path='/' element={<HomePage />} />
           <Route path='/ingredients/:ingredientId' element={<IngredientDetails />} />
-          <Route path='/orders' element={<OrdersPage />} />
+          <Route path='/feed' element={<FeedPage />}>
+            <Route path=':id' element={<FeedDetails />} />
+          </Route>
 
           <Route
             path='/login'
@@ -100,7 +104,9 @@ function App() {
             }
           >
             <Route index element={<ProfileInfoPage />}/>
-            <Route path='orders' element={<ProfileOrdersPage />}/>
+            <Route path='orders' element={<ProfileOrdersPage />}>
+              <Route path=':id' element={<ProfileOrderDetails />}/>
+            </Route>
           </Route>
 
           <Route path='*' element={<ErrorPage />} />
@@ -117,6 +123,22 @@ function App() {
 	            </Modal>
 	          }
 	        />
+          <Route
+            path="/feed/:id"
+            element={
+              <Modal onClose={handleModalClose}>
+                <FeedDetails />
+              </Modal>
+            }
+          />
+          <Route
+            path="/profile/orders/:id"
+            element={
+              <Modal onClose={handleModalClose}>
+                <ProfileOrderDetails />
+              </Modal>
+            }
+          />
         </Routes>
       )}
     </>

@@ -6,11 +6,10 @@ import { BurgerConstructor } from '../../components/burger-constructor/burger-co
 import { BurgerIngredients } from '../../components/burger-ingredients/burger-ingredients';
 
 import commonStyles from '../../common.module.css';
-import styles from './home-page.module.css';
 
 export const HomePage: React.FC = () => (
   <main className={commonStyles.mainContainer}>
-    <h1 className={styles.pageTitle}>Соберите бургер</h1>
+    <h1 className={commonStyles.pageTitle}>Соберите бургер</h1>
     <DndProvider backend={HTML5Backend}>
       <div className={commonStyles.flexContainer}>
         <div className={commonStyles.flexHalfChild}>

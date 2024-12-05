@@ -1,0 +1,26 @@
+.card {
+  composes: p-6 from global;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: var(--modal-background-color);
+  border-radius: 16px;
+  width: 100%;
+}
+
+.flexContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.number {
+  composes: text text_type_digits-default from global;
+}
+
+.date {
+  composes: text text_type_main-default text_color_inactive from global;
+}
+
+.name {
+  composes: text text_type_main-medium from global;
+}
