@@ -1,12 +1,12 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@/services';
 import { useDrop } from 'react-dnd';
 
-import { useModal } from '../../hooks/useModal';
+import { useModal } from '@/hooks/useModal';
 
 import { Button, ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Price } from '../price/price';
-import { Modal } from '../modal/modal';
+import { Price } from '@/components/price/price';
+import { Modal } from '@/components/modal/modal';
 import { OrderDetails } from './order-details';
 import { DraggableIngredient } from './draggable-ingredient';
 
@@ -19,15 +19,14 @@ import {
   selectBun,
   selectIngredients, 
   selectTotalPrice
-} from '../../services/burgerConstructorSlice';
+} from '@/services/burger-constructor-slice';
 
-import { clearOrder, submitOrder } from '../../services/orderSlice';
-import { AppDispatch } from '../../services';
+import { clearOrder, submitOrder } from '@/services/order-slice';
 
-import { IIngredient } from '../../types/burger';
+import { IIngredient } from '@/types/burger';
 
 import styles from './burger-constructor.module.css';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router';
 
 interface BurgerConstructorProps {}
@@ -36,7 +35,7 @@ export const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   const [{ isHover }, dropTarget] = useDrop({
     accept: 'ingredient',
@@ -145,7 +144,7 @@ export const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
       </div>
 
       <div className={styles.submitOrderContainer}>
-        <Price price={totalPrice} />
+        <Price price={totalPrice} size='large' />
         <Button
           htmlType='button'
           type='primary'

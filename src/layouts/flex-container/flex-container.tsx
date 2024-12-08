@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './FlexContainer.module.css';
+import styles from './flex-container.module.css';
 
 export interface IFlexContainerProps {
   children: React.ReactNode;

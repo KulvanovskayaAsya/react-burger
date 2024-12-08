@@ -35,3 +35,7 @@
 .formPageLinks {
   composes: text text_type_main-default from global;
 }
+
+.link {
+  color: var(--text-primary-color);
+}

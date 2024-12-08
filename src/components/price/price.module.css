@@ -4,6 +4,10 @@
   gap: 4px;
 }
 
-.price {
+.priceSmall {
+  composes: text text_type_digits-default from global;
+}
+
+.priceLarge {
   composes: text text_type_digits-medium from global;
 }

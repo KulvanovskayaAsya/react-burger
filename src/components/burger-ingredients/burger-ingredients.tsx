@@ -1,17 +1,17 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '@/services';
 
-import useScrollSpy from '../../hooks/useScrollSpy';
+import useScrollSpy from '@/hooks/useScrollSpy';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { IngredientsTypeSection } from './ingredients-type-section';
 
-import { RootState } from '../../services';
+import { RootState } from '@/services';
 
-import { STATUS } from '../../types/slices';
+import { STATUS } from '@/types/slices';
 
 import styles from './burger-ingredients.module.css';
-import { selectIngredientsByType, selectIngredientsStatus } from '../../services/burgerIngredientsSlice';
+import { selectIngredientsByType, selectIngredientsStatus } from '@/services/burger-ingredients-slice';
 
 interface BurgerIngredientsProps {}
 

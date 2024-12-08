@@ -1,5 +1,5 @@
 import React from 'react';
-import loaderSVG from '../../assets/loader.svg';
+import loaderSVG from '@/assets/loader.svg';
 import styles from './Loader.module.css';
 
 interface LoaderProps {

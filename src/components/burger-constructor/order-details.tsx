@@ -1,11 +1,11 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '@/services';
 
-import { selectOrderNumber, selectOrderStatus } from '../../services/orderSlice'
+import { selectOrderNumber, selectOrderStatus } from '@/services/order-slice'
 
-import doneImgPath from '../../images/done.svg';
+import doneImgPath from '@/assets/done.svg';
 import styles from './order-details.module.css';
-import { Loader } from '../loader/loader';
-import { STATUS } from '../../types/slices';
+import { Loader } from '@/components/loader/loader';
+import { STATUS } from '@/types/slices';
 
 export const OrderDetails = () => {
   const orderNumber = useSelector(selectOrderNumber);

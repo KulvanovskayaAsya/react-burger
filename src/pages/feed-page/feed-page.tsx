@@ -1,76 +1,62 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import commonStyles from '../../common.module.css';
-import { FeedCard } from '../../components/feed-card/feed-card';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services';
-import { selectIngredients } from '../../services/burgerIngredientsSlice';
-import { OrdersStatistics } from '../../components/orders-statistics/orders-statistics';
-import { OrdersStatus } from '../../components/orders-status/orders-status';
+import { OrdersStatistics } from '@/components/orders-statistics/orders-statistics';
+import { OrdersStatus } from '@/components/orders-status/orders-status';
+import { FeedList } from '@/components/feed-list/feed-list';
+import { RootState, useDispatch, useSelector } from '@/services';
+import { wsClose, wsConnecting } from '@/services/feed-slice';
+import FlexContainer from '@/layouts/flex-container/flex-container';
 
-const feeds = {
-  success: true,
-  orders: [
-    {
-      ingredients: [
-        "643d69a5c3f7b9001cfa093c",
-        "643d69a5c3f7b9001cfa0941",
-        "643d69a5c3f7b9001cfa093e",
-        "643d69a5c3f7b9001cfa0942",
-        "643d69a5c3f7b9001cfa093c",
-        "643d69a5c3f7b9001cfa0941",
-        "643d69a5c3f7b9001cfa093e",
-        "643d69a5c3f7b9001cfa0942"
-      ],
-      _id: "",
-      status: "done",
-      number: 678,
-      createdAt: "2021-06-23T14:43:22.587Z",
-      updatedAt: "2021-06-23T14:43:22.603Z"
-    }
-  ],
-  total: 1,
-  totalToday: 1
-}
+import commonStyles from '@/common.module.css';
 
 export const FeedPage: React.FC = () => {
-  const ingredients = useSelector((state: RootState) => selectIngredients(state));
+  const dispatch = useDispatch();
+  const { orders, total, totalToday } = useSelector(
+    (state: RootState) => state.feed
+  );
 
-  const getIngredientsDetails = (ids: string[]) => {
-    return ids
-      .map((id) => ingredients.find((ingredient) => ingredient._id === id))
-      .filter(Boolean);
-  };
+  useEffect(() => {
+    const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
+    dispatch(wsConnecting(wsUrl));
+
+    return () => {
+      dispatch(wsClose());
+    };
+  }, []);
+  
+  const readyOrders = orders.filter((order) => order.status === 'done').map((order) => order.number);
+  const inProgressOrders = orders.filter((order) => order.status === 'pending').map((order) => order.number);
 
   return (
-    <>
+    <div>
       <h1 className={commonStyles.pageTitle}>Лента заказов</h1>
         <div className={commonStyles.flexContainer}>
           <div className={commonStyles.flexHalfChild}>
-            {feeds.orders.map(feed => {
-              const detailedIngredients = getIngredientsDetails(feed.ingredients);
-
-              return (
-                <FeedCard
-                  key={feed._id}
-                  number={feed.number}
-                  ingredients={detailedIngredients}
-                  date={new Date(feed.createdAt)}
-                  price={560}
-                  linkTo={`/feed/${feed._id}`}
-                />
-              )
-            })}
-            {/* <Feeds /> */}
+            <FeedList orders={orders} />
           </div>
           <div className={commonStyles.flexHalfChild}>
-            <OrdersStatus orders={feeds.orders} />
+            <FlexContainer gap='36px'>
+              <OrdersStatus 
+                title="Готовы:" 
+                orders={readyOrders} 
+                status="done" 
+              />
+              <OrdersStatus 
+                title="В работе:" 
+                orders={inProgressOrders} 
+                status="pending" 
+              />
+            </FlexContainer>
             <OrdersStatistics 
-              total={feeds.total} 
-              totalToday={feeds.totalToday} 
+              title='Выполнено за все время:'
+              value={total} 
+            />
+            <OrdersStatistics 
+              title='Выполнено за сегодня:' 
+              value={totalToday} 
             />
           </div>
         </div>
-    </>
+    </div>
   );
 };

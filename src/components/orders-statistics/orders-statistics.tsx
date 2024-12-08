@@ -1,20 +1,21 @@
 import React from 'react';
+import FlexContainer from '@/layouts/flex-container/flex-container';
 import styles from './orders-statistics.module.css';
 
-export const OrdersStatistics: React.FC = () => {
-  const total = 28752;
-  const totalToday = 138;
+export interface IOrdersStatisticsProps {
+  title: string;
+  value: number;
+}
 
+export const OrdersStatistics: React.FC<IOrdersStatisticsProps> = ({ title, value }) => {
   return (
-    <div className={styles.statistics}>
-      <div className={styles.total}>
-        <h3>Выполнено за все время:</h3>
-        <p className={styles.value}>{total}</p>
-      </div>
-      <div className={styles.today}>
-        <h3>Выполнено за сегодня:</h3>
-        <p className={styles.value}>{totalToday}</p>
-      </div>
-    </div>
+    <FlexContainer flexDirection='column'>
+      <p className={styles.title}>
+        {title}
+      </p>
+      <p className={styles.value}>
+        {value}
+      </p>
+    </FlexContainer>
   );
 }

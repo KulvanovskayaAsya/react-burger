@@ -1,5 +1,7 @@
-import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react'
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom'
 
+import { MainLayout } from '@/layouts/main-layout/main-layout'
 import {
   HomePage,
   FeedPage,
@@ -13,22 +15,22 @@ import {
   ProfileOrdersPage,
   ProfileOrderDetails,
   ErrorPage
-} from '../../pages';
-import { MainLayout } from '../../layouts/main-layout/main-layout';
+} from '@/pages'
 
-import { AuthGuard, GuestGuard } from '../../utils/protected-route';
 
-import { Modal } from '../modal/modal';
-import { IngredientDetails } from '../burger-ingredients/ingredient-details';
-import { AppDispatch } from '../../services';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchIngredients, selectIngredientsStatus } from '../../services/burgerIngredientsSlice';
-import { useEffect } from 'react';
-import { STATUS } from '../../types/slices';
-import { useAuth } from '../../hooks/useAuth';
+import { AuthGuard, GuestGuard } from '@/utils/protected-route';
+
+import { Modal } from '@/components/modal/modal'
+import { IngredientDetails } from '@/components/burger-ingredients/ingredient-details';
+
+import { useDispatch, useSelector } from '@/services';
+import { fetchIngredients, selectIngredientsStatus } from '@/services/burger-ingredients-slice';
+import { useAuth } from '@/hooks/useAuth';
+
+import { STATUS } from '@/types/slices';
 
 function App() {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const status = useSelector(selectIngredientsStatus);
   const { isAuthChecked, fetchUser } = useAuth();
 

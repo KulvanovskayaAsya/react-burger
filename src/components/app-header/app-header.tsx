@@ -1,6 +1,6 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import commonStyles from '../../common.module.css';
+import commonStyles from '@/common.module.css';
 import styles from './app-header.module.css';
 import { NavLink } from 'react-router-dom';
 

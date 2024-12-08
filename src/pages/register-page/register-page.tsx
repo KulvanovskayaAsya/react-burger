@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { useForm } from '../../hooks/useForm';
-import { useAuth } from '../../hooks/useAuth';
-import commonStyles from '../../common.module.css';
+import { useForm } from '@/hooks/useForm';
+import { useAuth } from '@/hooks/useAuth';
+import commonStyles from '@/common.module.css';
 
 interface IRegisterForm {
   name: string;

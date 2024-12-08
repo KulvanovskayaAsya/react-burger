@@ -1,12 +1,10 @@
 import React from 'react';
 
-import { IIngredient } from '../../types/burger';
-
 import styles from './ingredient-details.module.css';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services';
-import { selectIngredientById } from '../../services/burgerIngredientsSlice';
+import { useSelector } from '@/services';
+import { RootState } from '@/services';
+import { selectIngredientById } from '@/services/burger-ingredients-slice';
 
 interface IngredientDetailsProps {
 }

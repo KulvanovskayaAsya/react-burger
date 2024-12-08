@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './order-ingredients.module.css';
-import { IngredientPreview } from '../ingredient-preview/ingredient-preview';
+import { IngredientPreview } from '@/components/ingredient-preview/ingredient-preview';
 
 type OrderIngredientsProps = {
   ingredients: string[];

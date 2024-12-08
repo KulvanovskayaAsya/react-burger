@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 import styles from './profile-order-details.module.css'
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 
 export const ProfileOrderDetails: React.FC = () => {
   const { logout } = useAuth();

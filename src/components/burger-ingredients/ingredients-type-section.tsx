@@ -1,6 +1,6 @@
 import { IngredientCard } from './ingredient-card';
 
-import { IIngredient } from '../../types/burger';
+import { IIngredient } from '@/types/burger';
 
 import styles from './ingredients-type-section.module.css';
 

@@ -1,0 +1,103 @@
+.container {
+  background-color: #1c1c21;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.flexContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.number {
+  composes: text text_type_digits-default from global;
+}
+
+.date {
+  composes: text text_type_main-default text_color_inactive from global;
+}
+
+.name {
+  composes: text text_type_main-medium from global;
+}
+
+.name {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.status {
+  font-size: 16px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.statusDone {
+  color: #00cccc;
+}
+
+.statusPending {
+  color: #ffffff;
+}
+
+.statusCreated {
+  color: #ffcc00;
+}
+
+.subtitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.ingredientsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.ingredient {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ingredientInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ingredientImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.ingredientName {
+  font-size: 16px;
+  color: white;
+}
+
+.ingredientPrice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: white;
+}
+
+.totalContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
