@@ -20,5 +20,5 @@ export const ProfileOrdersPage: React.FC = () => {
     };
   }, []);
 
-  return <FeedList orders={orders} />;
+  return <FeedList orders={orders} baseLinkPath="/profile/orders" showStatus />;
 };

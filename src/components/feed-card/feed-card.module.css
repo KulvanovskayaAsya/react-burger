@@ -24,3 +24,11 @@
 .name {
   composes: text text_type_main-medium from global;
 }
+
+.status {
+  composes: text text_type_digits-default from global;
+}
+
+.done {
+  color: #00cccc;
+}

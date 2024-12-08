@@ -32,7 +32,7 @@ export const FeedPage: React.FC = () => {
       <h1 className={commonStyles.pageTitle}>Лента заказов</h1>
         <div className={commonStyles.flexContainer}>
           <div className={commonStyles.flexHalfChild}>
-            <FeedList orders={orders} />
+            <FeedList orders={orders} baseLinkPath="/feed" />
           </div>
           <div className={commonStyles.flexHalfChild}>
             <FlexContainer gap='36px'>

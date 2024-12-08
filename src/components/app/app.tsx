@@ -107,7 +107,7 @@ function App() {
           >
             <Route index element={<ProfileInfoPage />}/>
             <Route path='orders' element={<ProfileOrdersPage />}>
-              <Route path=':id' element={<ProfileOrderDetails />}/>
+              <Route path=':id' element={<FeedDetails />}/>
             </Route>
           </Route>
 
@@ -137,7 +137,7 @@ function App() {
             path="/profile/orders/:id"
             element={
               <Modal onClose={handleModalClose}>
-                <ProfileOrderDetails />
+                <FeedDetails />
               </Modal>
             }
           />

@@ -1,16 +1,17 @@
 import { useSelector } from '@/services';
 import { IOrder } from '@/types/feed';
 import { FeedCard } from '@/components/feed-card/feed-card';
-import { RootState } from '@/services';
-import { selectIngredients, selectIngredientsMap } from '@/services/burger-ingredients-slice';
+import { selectIngredientsMap } from '@/services/burger-ingredients-slice';
 import { IIngredient } from '@/types/burger';
 import styles from './feed-list.module.css'
 
-export interface IFeedListProps {
+interface IFeedListProps {
   orders: IOrder[];
+  showStatus?: boolean;
+  baseLinkPath: string;
 }
 
-export const FeedList: React.FC<IFeedListProps> = ({ orders }) => {
+export const FeedList: React.FC<IFeedListProps> = ({ orders, showStatus = false, baseLinkPath }) => {
   const ingredientsMap = useSelector(selectIngredientsMap);
 
   const getIngredientsImages = (ids: string[]): Array<IIngredient & { quantity: number }> => {
@@ -46,7 +47,8 @@ export const FeedList: React.FC<IFeedListProps> = ({ orders }) => {
             ingredients={ingredientsImages}
             date={new Date(order.createdAt)}
             price={totalPrice}
-            linkTo={`/feed/${order._id}`}
+            status={showStatus ? order.status : undefined}
+            linkTo={`${baseLinkPath}/${order._id}`}
           />
         )
       })}

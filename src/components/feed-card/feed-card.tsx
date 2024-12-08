@@ -36,7 +36,7 @@ export const FeedCard: React.FC<IFeedProps> = ({ number, ingredients, date, pric
           <FormattedDate className={styles.date} date={date} />
         </div>
         <h2 className={styles.name}>{name}</h2>
-        {status && <span>{status}</span>}
+        {status && <span className={styles.status}>{status}</span>}
         <FlexContainer justifyContent='space-between'>
           <OrderIngredients ingredients={ingredientsImages} />
           <Price price={price} />
