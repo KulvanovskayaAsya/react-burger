@@ -13,11 +13,11 @@ import { IIngredient } from '@/types/burger';
 import styles from './ingredient-card.module.css';
 import { Link, useLocation } from 'react-router-dom';
 
-interface IngredientCardProps {
+interface IIngredientCardProps {
   ingredient: IIngredient;
 }
 
-export const IngredientCard: React.FC<IngredientCardProps> = ({ ingredient }) => {
+export const IngredientCard: React.FC<IIngredientCardProps> = ({ ingredient }) => {
   const location = useLocation();
 
   const count = useSelector((state: RootState) => selectIngredientCount(state, ingredient._id, ingredient.type));

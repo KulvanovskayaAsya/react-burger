@@ -1,12 +1,12 @@
 import { useState, useLayoutEffect } from 'react';
 
-interface ScrollSpyOptions {
+interface IScrollSpyOptions {
   root?: HTMLElement | null;
   rootMargin?: string;
   threshold?: number | number[];
 }
 
-const useScrollSpy = (ids: string[], { root = null, rootMargin = '0px 0px 0px 0px', threshold = 0 }: ScrollSpyOptions = {}) => {
+const useScrollSpy = (ids: string[], { root = null, rootMargin = '0px 0px 0px 0px', threshold = 0 }: IScrollSpyOptions = {}) => {
   const [activeId, setActiveId] = useState<string>('');
 
   useLayoutEffect(() => {
@@ -18,13 +18,13 @@ const useScrollSpy = (ids: string[], { root = null, rootMargin = '0px 0px 0px 0p
 
     const observerCallback = (entries: IntersectionObserverEntry[]) => {
       let intersectingId = '';
-      
+
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           intersectingId = entry.target.id;
         }
       });
-      
+
       if (intersectingId) {
         setActiveId(intersectingId);
       }

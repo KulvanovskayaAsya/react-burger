@@ -6,10 +6,7 @@ import { useSelector } from '@/services';
 import { RootState } from '@/services';
 import { selectIngredientById } from '@/services/burger-ingredients-slice';
 
-interface IngredientDetailsProps {
-}
-
-export const IngredientDetails: React.FC<IngredientDetailsProps> = () => {
+export const IngredientDetails: React.FC = () => {
   const { ingredientId } = useParams<{ ingredientId: string }>();
   const ingredient = useSelector((state: RootState) => selectIngredientById(state, ingredientId!));
 
