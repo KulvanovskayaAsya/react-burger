@@ -105,8 +105,15 @@ function App() {
           >
             <Route index element={<ProfileInfoPage />} />
             <Route path='orders' element={<ProfileOrdersPage />} />
-            <Route path='orders/:id' element={<FeedDetails />} />
           </Route>
+          <Route
+            path='/profile/orders/:id'
+            element={
+              <AuthGuard>
+                <FeedDetails />
+              </AuthGuard>
+            }
+          />
           <Route path='*' element={<ErrorPage />} />
         </Route>
       </Routes>

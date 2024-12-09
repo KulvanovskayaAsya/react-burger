@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import { OrdersStatistics } from '@/components/orders-statistics/orders-statistics';
 import { OrdersStatus } from '@/components/orders-status/orders-status';
@@ -8,6 +8,7 @@ import { wsClose, wsConnecting } from '@/services/feed-slice';
 import FlexContainer from '@/layouts/flex-container/flex-container';
 
 import commonStyles from '@/common.module.css';
+import { EOrderStatus } from '@/types/order';
 
 export const FeedPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -24,8 +25,13 @@ export const FeedPage: React.FC = () => {
     };
   }, []);
 
-  const readyOrders = orders.filter((order) => order.status === 'done').map((order) => order.number);
-  const inProgressOrders = orders.filter((order) => order.status === 'pending').map((order) => order.number);
+  const readyOrders = useMemo(() => (
+    orders.filter((order) => order.status === 'done').map((order) => order.number)
+  ), [orders]);
+
+  const inProgressOrders = useMemo(() => (
+    orders.filter((order) => order.status === 'pending').map((order) => order.number)
+  ), [orders]);
 
   return (
     <div>
@@ -40,12 +46,12 @@ export const FeedPage: React.FC = () => {
                 <OrdersStatus
                   title="Готовы:"
                   orders={readyOrders}
-                  status="done"
+                  status={EOrderStatus.Done}
                 />
                 <OrdersStatus
                   title="В работе:"
                   orders={inProgressOrders}
-                  status="pending"
+                  status={EOrderStatus.Pending}
                 />
               </FlexContainer>
               <OrdersStatistics
