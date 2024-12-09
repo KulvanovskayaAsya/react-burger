@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
-import { getIngredients } from '../api/ingredients';
-import { IIngredient } from '../types/burger';
-import { IBaseSliceState, STATUS } from '../types/slices';
+import { getIngredients } from '@/api/ingredients';
+import { IIngredient } from '@/types/burger';
+import { IBaseSliceState, STATUS } from '@/types/slices';
 import { RootState } from '.';
 
 interface IIngredientsState extends IBaseSliceState {
@@ -53,4 +53,14 @@ export const selectIngredientsByType = createSelector(
 export const selectIngredientById = createSelector(
   [selectIngredients, (_: RootState, id: string) => id],
   (ingredients, id) => ingredients.find((ingredient) => ingredient._id === id)
+);
+
+export const selectIngredientsMap = createSelector(
+  [selectIngredients],
+  (ingredients) => {
+    return ingredients.reduce((acc, ingredient) => {
+      acc[ingredient._id] = ingredient;
+      return acc;
+    }, {} as Record<string, IIngredient>);
+  }
 );

@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react';
 
-import commonStyles from '../../common.module.css';
+import commonStyles from '@/common.module.css';
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { useForm } from '../../hooks/useForm';
-import { useAuth } from '../../hooks/useAuth';
+import { useForm } from '@/hooks/useForm';
+import { useAuth } from '@/hooks/useAuth';
 
 interface ILoginForm {
   email: string;

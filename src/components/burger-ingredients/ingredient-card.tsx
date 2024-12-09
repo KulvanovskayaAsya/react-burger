@@ -1,14 +1,14 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '@/services';
 import { useDrag } from 'react-dnd';
 
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Price } from '../price/price';
+import { Price } from '@/components/price/price';
 
-import { selectIngredientCount } from '../../services/burgerConstructorSlice';
-import { RootState } from '../../services';
+import { selectIngredientCount } from '@/services/burger-constructor-slice';
+import { RootState } from '@/services';
 
-import { IIngredient } from '../../types/burger';
+import { IIngredient } from '@/types/burger';
 
 import styles from './ingredient-card.module.css';
 import { Link, useLocation } from 'react-router-dom';

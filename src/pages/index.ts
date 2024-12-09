@@ -1,5 +1,7 @@
 export { HomePage } from './home-page/home-page'
-export { OrdersPage } from './orders-page/orders-page'
+
+export { FeedPage } from './feed-page/feed-page'
+export { FeedDetails } from './feed-details/feed-details'
 
 export { LoginPage } from './login-page/login-page'
 export { RegisterPage } from './register-page/register-page'

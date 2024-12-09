@@ -9,7 +9,7 @@ import {
   ITokenRefreshRequest,
   ITokenRefreshResponse, 
   IUserResponse
-} from '../types/api';
+} from '@/types/api';
 import { API_ENDPOINTS } from './endpoints';
 import { request } from './request';
 

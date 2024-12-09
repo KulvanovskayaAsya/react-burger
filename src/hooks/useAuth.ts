@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '@/services'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AppDispatch, RootState } from '../services';
+import { AppDispatch, RootState } from '@/services';
 import {
   registerUser,
   loginUser,
@@ -13,8 +13,8 @@ import {
   selectIsAuthChecked,
   forgotPassword as forgotPasswordAction,
   resetPassword as resetPasswordAction,
-} from '../services/authSlice';
-import { IUser } from '../types/api';
+} from '@/services/auth-slice';
+import { IUser } from '@/types/api';
 
 interface IUseAuthReturn {
   user: IUser | null;
@@ -33,7 +33,7 @@ interface IUseAuthReturn {
 }
 
 export const useAuth = (): IUseAuthReturn => {
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 

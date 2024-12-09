@@ -8,10 +8,10 @@ import {
   resetPassword as resetPasswordRequest,
   getUser as getUserRequest,
   updateUser as updateUserRequest,
-} from '../api/auth';
-import { IBaseSliceState, STATUS } from '../types/slices';
+} from '@/api/auth';
+import { IBaseSliceState, STATUS } from '@/types/slices';
 import { RootState } from '.';
-import { IUser } from '../types/api';
+import { IUser } from '@/types/api';
 
 interface IAuthState extends IBaseSliceState {
   user: IUser | null;

@@ -1,11 +1,11 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useForm } from '../../hooks/useForm'
+import { useForm } from '@/hooks/useForm'
 
-import commonStyles from '../../common.module.css'
+import commonStyles from '@/common.module.css'
 import styles from './profile-info-page.module.css'
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 
 interface IProfileForm {
   name: string;

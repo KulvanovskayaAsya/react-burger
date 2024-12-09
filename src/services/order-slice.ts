@@ -1,17 +1,20 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { postOrder } from '../api/order';
-import { IIngredient } from '../types/burger';
-import { IBaseSliceState, STATUS } from '../types/slices';
+import { fetchOrderById, postOrder } from '@/api/order';
+import { IBaseSliceState, STATUS } from '@/types/slices';
 import { RootState } from '.';
+import { IOrder } from '@/types/feed';
+import { IIngredient } from '@/types/burger';
 
 interface IOrderState extends IBaseSliceState {
   orderNumber: number | null;
+  orderDetails: IOrder | null;
 }
 
 const initialState: IOrderState = {
   status: STATUS.IDLE,
   error: null,
   orderNumber: null,
+  orderDetails: null,
 };
 
 export const submitOrder = createAsyncThunk(
@@ -21,6 +24,19 @@ export const submitOrder = createAsyncThunk(
     return response.order.number;
   }
 );
+
+export const fetchOrderDetails = createAsyncThunk(
+  'order/fetchOrderDetails',
+  async (orderId: string, { rejectWithValue }) => {
+    try {
+      const response = await fetchOrderById(orderId);
+      return response.orders;
+    } catch (error) {
+      return rejectWithValue((error as Error).message || 'Не удалось получить данные заказа');
+    }
+  }
+);
+
 
 const orderSlice = createSlice({
   name: 'order',
@@ -45,6 +61,20 @@ const orderSlice = createSlice({
       .addCase(submitOrder.rejected, (state, action) => {
         state.status = STATUS.FAILED;
         state.error = action.error.message || 'Не удалось отправить заказ';
+      })
+
+      .addCase(fetchOrderDetails.pending, (state) => {
+        state.status = STATUS.LOADING;
+        state.error = null;
+        state.orderDetails = null;
+      })
+      .addCase(fetchOrderDetails.fulfilled, (state, action) => {
+        state.status = STATUS.SUCCEEDED;
+        state.orderDetails = action.payload[0];
+      })
+      .addCase(fetchOrderDetails.rejected, (state, action) => {
+        state.status = STATUS.FAILED;
+        state.error = action.payload as string;
       });
   }
 })
@@ -55,3 +85,4 @@ export default orderSlice.reducer;
 
 export const selectOrderNumber = (state: RootState) => state.order.orderNumber;
 export const selectOrderStatus = (state: RootState) => state.order.status;
+export const selectOrderDetails = (state: RootState) => state.order.orderDetails;

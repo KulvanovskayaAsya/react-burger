@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '@/services';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { selectUser, selectIsAuthChecked } from '../services/authSlice';
+import { selectUser, selectIsAuthChecked } from '@/services/auth-slice';
 import { useEffect } from 'react';
 
 interface IProtectedRouteProps {
