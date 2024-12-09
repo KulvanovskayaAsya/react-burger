@@ -13,9 +13,7 @@ import { STATUS } from '../../types/slices';
 import styles from './burger-ingredients.module.css';
 import { selectIngredientsByType, selectIngredientsStatus } from '../../services/burgerIngredientsSlice';
 
-interface BurgerIngredientsProps {}
-
-export const BurgerIngredients: React.FC<BurgerIngredientsProps> = () => {
+export const BurgerIngredients: React.FC = () => {
   const status = useSelector(selectIngredientsStatus);
 
   const buns = useSelector((state: RootState) => selectIngredientsByType(state, 'bun'));

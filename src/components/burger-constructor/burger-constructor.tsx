@@ -10,14 +10,14 @@ import { Modal } from '../modal/modal';
 import { OrderDetails } from './order-details';
 import { DraggableIngredient } from './draggable-ingredient';
 
-import { 
-  addIngredient, 
+import {
+  addIngredient,
   moveIngredient,
-  removeIngredient, 
+  removeIngredient,
   addBun,
   clearConstructorIngredients,
   selectBun,
-  selectIngredients, 
+  selectIngredients,
   selectTotalPrice
 } from '../../services/burgerConstructorSlice';
 
@@ -30,9 +30,7 @@ import styles from './burger-constructor.module.css';
 import { useAuth } from '../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router';
 
-interface BurgerConstructorProps {}
-
-export const BurgerConstructor: React.FC<BurgerConstructorProps> = () => {
+export const BurgerConstructor: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
