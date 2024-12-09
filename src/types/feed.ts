@@ -1,12 +1,4 @@
-export interface IOrder {
-  _id: string;
-  ingredients: string[]; 
-  status: 'done' | 'pending' | 'created';
-  number: number;
-  name: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { IOrder } from './order';
 
 export interface IFeed {
   success: boolean;

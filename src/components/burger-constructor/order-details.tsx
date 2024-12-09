@@ -3,14 +3,16 @@ import { useSelector } from '@/services';
 import { selectOrderNumber, selectOrderStatus } from '@/services/order-slice'
 
 import doneImgPath from '@/assets/done.svg';
-import styles from './order-details.module.css';
 import { Loader } from '@/components/loader/loader';
 import { STATUS } from '@/types/slices';
+
+import commonStyles from '@/common.module.css';
+import styles from './order-details.module.css';
 
 export const OrderDetails = () => {
   const orderNumber = useSelector(selectOrderNumber);
   const orderStatus = useSelector(selectOrderStatus);
-  
+
   return (
     <div className={styles.container}>
       {orderStatus === STATUS.LOADING ? (
@@ -22,9 +24,9 @@ export const OrderDetails = () => {
         </>
       ) : (
         <>
-          <h2 className={styles.number}>{orderNumber}</h2>
+          <h2 className={commonStyles.highlightedNumber}>{orderNumber}</h2>
           <p className={styles.numberCaption}>идентификатор заказа</p>
-    
+
           <img className={styles.doneImage} src={doneImgPath} />
           <p className={styles.orderProgress}>
             Ваш заказ начали готовить

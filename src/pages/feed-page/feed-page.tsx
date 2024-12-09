@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import { OrdersStatistics } from '@/components/orders-statistics/orders-statistics';
 import { OrdersStatus } from '@/components/orders-status/orders-status';
-import { FeedList } from '@/components/feed-list/feed-list';
+import { OrdersList } from '@/components/orders-list/orders-list';
 import { RootState, useDispatch, useSelector } from '@/services';
 import { wsClose, wsConnecting } from '@/services/feed-slice';
 import FlexContainer from '@/layouts/flex-container/flex-container';
@@ -23,7 +23,7 @@ export const FeedPage: React.FC = () => {
       dispatch(wsClose());
     };
   }, []);
-  
+
   const readyOrders = orders.filter((order) => order.status === 'done').map((order) => order.number);
   const inProgressOrders = orders.filter((order) => order.status === 'pending').map((order) => order.number);
 
@@ -32,29 +32,31 @@ export const FeedPage: React.FC = () => {
       <h1 className={commonStyles.pageTitle}>Лента заказов</h1>
         <div className={commonStyles.flexContainer}>
           <div className={commonStyles.flexHalfChild}>
-            <FeedList orders={orders} baseLinkPath="/feed" />
+            <OrdersList orders={orders} baseLinkPath="/feed" />
           </div>
           <div className={commonStyles.flexHalfChild}>
-            <FlexContainer gap='36px'>
-              <OrdersStatus 
-                title="Готовы:" 
-                orders={readyOrders} 
-                status="done" 
+            <FlexContainer flexDirection='column' gap='60px'>
+              <FlexContainer gap='36px'>
+                <OrdersStatus
+                  title="Готовы:"
+                  orders={readyOrders}
+                  status="done"
+                />
+                <OrdersStatus
+                  title="В работе:"
+                  orders={inProgressOrders}
+                  status="pending"
+                />
+              </FlexContainer>
+              <OrdersStatistics
+                title='Выполнено за все время:'
+                value={total}
               />
-              <OrdersStatus 
-                title="В работе:" 
-                orders={inProgressOrders} 
-                status="pending" 
+              <OrdersStatistics
+                title='Выполнено за сегодня:'
+                value={totalToday}
               />
             </FlexContainer>
-            <OrdersStatistics 
-              title='Выполнено за все время:'
-              value={total} 
-            />
-            <OrdersStatistics 
-              title='Выполнено за сегодня:' 
-              value={totalToday} 
-            />
           </div>
         </div>
     </div>

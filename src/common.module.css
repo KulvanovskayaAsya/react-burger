@@ -39,3 +39,8 @@
 .link {
   color: var(--text-primary-color);
 }
+
+.highlightedNumber {
+  composes: text text_type_digits-large mb-8 from global;
+  text-shadow: 0px 0px 15px var(--primary-color);
+}

@@ -13,7 +13,6 @@ import {
   ProfilePage,
   ProfileInfoPage,
   ProfileOrdersPage,
-  ProfileOrderDetails,
   ErrorPage
 } from '@/pages'
 
@@ -60,9 +59,8 @@ function App() {
         <Route element={<MainLayout />}>
           <Route path='/' element={<HomePage />} />
           <Route path='/ingredients/:ingredientId' element={<IngredientDetails />} />
-          <Route path='/feed' element={<FeedPage />}>
-            <Route path=':id' element={<FeedDetails />} />
-          </Route>
+          <Route path='/feed' element={<FeedPage />}/>
+          <Route path='/feed/:id' element={<FeedDetails />} />
 
           <Route
             path='/login'
@@ -105,12 +103,10 @@ function App() {
               </AuthGuard>
             }
           >
-            <Route index element={<ProfileInfoPage />}/>
-            <Route path='orders' element={<ProfileOrdersPage />}>
-              <Route path=':id' element={<FeedDetails />}/>
-            </Route>
+            <Route index element={<ProfileInfoPage />} />
+            <Route path='orders' element={<ProfileOrdersPage />} />
+            <Route path='orders/:id' element={<FeedDetails />} />
           </Route>
-
           <Route path='*' element={<ErrorPage />} />
         </Route>
       </Routes>

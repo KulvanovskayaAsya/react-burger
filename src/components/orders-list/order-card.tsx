@@ -5,21 +5,23 @@ import { FormattedDate } from '@ya.praktikum/react-developer-burger-ui-component
 import { Price } from '@/components/price/price';
 import OrderIngredients from '@/components/order-ingredients/order-ingredients';
 
-import styles from './feed-card.module.css';
+import styles from './order-card.module.css';
 import commonStyles from '@/common.module.css';
 import FlexContainer from '@/layouts/flex-container/flex-container';
+import OrderStatus from '@/components/order-status/order-status';
+import { EOrderStatus } from '@/types/order';
 
-export interface IFeedProps {
+export interface IOrderCardProps {
   number: number;
   ingredients: Array<IIngredient & { quantity: number }>;
   date: Date;
   price: number;
-  status?: string;
+  status?: EOrderStatus;
   linkTo: string;
   name: string;
 }
 
-export const FeedCard: React.FC<IFeedProps> = ({ number, ingredients, date, price, status, name, linkTo }) => {
+export const OrderCard: React.FC<IOrderCardProps> = ({ number, ingredients, date, price, status, name, linkTo }) => {
   const location = useLocation();
 
   const ingredientsImages = ingredients.map(i => i.image);
@@ -36,7 +38,7 @@ export const FeedCard: React.FC<IFeedProps> = ({ number, ingredients, date, pric
           <FormattedDate className={styles.date} date={date} />
         </div>
         <h2 className={styles.name}>{name}</h2>
-        {status && <span className={styles.status}>{status}</span>}
+        {status && <OrderStatus status={status} />}
         <FlexContainer justifyContent='space-between'>
           <OrderIngredients ingredients={ingredientsImages} />
           <Price price={price} />

@@ -10,18 +10,8 @@ import { IIngredient } from '@/types/burger';
 
 import styles from './feed-details.module.css';
 import { IngredientPreview } from '@/components/ingredient-preview/ingredient-preview';
-
-const statusMap: { [key: string]: string } = {
-  done: 'Выполнен',
-  pending: 'Готовится',
-  created: 'Создан',
-};
-
-const statusColor: { [key: string]: string } = {
-  done: styles.statusDone,
-  pending: styles.statusPending,
-  created: styles.statusCreated,
-};
+import FlexContainer from '@/layouts/flex-container/flex-container';
+import OrderStatus from '@/components/order-status/order-status';
 
 export const FeedDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -74,31 +64,24 @@ export const FeedDetails: React.FC = () => {
   );
 
   return (
-    <div className={styles.container}>
-      <div className={styles.flexContainer}>
-        <span className={styles.number}>#{order.number}</span>
-        <FormattedDate className={styles.date} date={new Date(order.createdAt)} />
-      </div>
+    <FlexContainer flexDirection='column' gap='16px'>
+      <span className={styles.number}>#{order.number}</span>
       <h2 className={styles.name}>{order.name}</h2>
-      <span className={`${styles.status} ${statusColor[order.status]}`}>
-        {statusMap[order.status] || order.status}
-      </span>
+      <OrderStatus status={order.status} />
       <h3 className={styles.subtitle}>Состав:</h3>
       <ul className={styles.ingredientsList}>
         {orderIngredients.map((ingredient) => (
           <li key={ingredient._id} className={styles.ingredient}>
-            <div className={styles.ingredientInfo}>
-              <IngredientPreview image={ingredient.image} />
-              <span className={styles.ingredientName}>{ingredient.name}</span>
-            </div>
-            <Price price={`${ingredient.quantity} x ${ingredient.price}`} />
+            <IngredientPreview image={ingredient.image} />
+            <span className={styles.ingredientName}>{ingredient.name}</span>
+            <Price className={styles.price} price={`${ingredient.quantity} x ${ingredient.price}`} />
           </li>
         ))}
       </ul>
-      <div className={styles.totalContainer}>
+      <FlexContainer justifyContent='space-between'>
         <FormattedDate className={styles.date} date={new Date(order.createdAt)} />
         <Price price={totalPrice} />
-      </div>
-    </div>
+      </FlexContainer>
+    </FlexContainer>
   );
 };

@@ -16,8 +16,7 @@ export type TWsActions<R, S> = {
 const RECONNECT_PERIOD = 3000;
 
 export const socketMiddleware = <R, S>(
-  wsActions: TWsActions<R, S>,
-  withTokenRefresh: boolean = false
+  wsActions: TWsActions<R, S>
 ): Middleware<{}, RootState> => {
   return (store) => {
     let socket: WebSocket | null = null;
@@ -92,7 +91,7 @@ export const socketMiddleware = <R, S>(
 
           if (isConnected) {
             reconnectTimer = setTimeout(() => {
-              dispatch(connect(url)); // Попытка переподключения
+              dispatch(connect(url));
             }, RECONNECT_PERIOD);
           }
         };
@@ -116,40 +115,3 @@ export const socketMiddleware = <R, S>(
     };
   };
 };
-
-
-// socket.onmessage = (event) => {
-        //   const { data } = event;
-
-        //   try {
-        //     const parsedData = JSON.parse(data);
-
-        //     if (withTokenRefresh && parsedData.message === 'Invalid or missing token') {
-        //       const state = store.getState();
-        //       const refresh = state.auth.refreshToken;
-
-        //       if (refresh) {
-        //         dispatch(refreshToken(refresh))
-        //           .unwrap()
-        //           .then((refreshedData: ITokenRefreshResponse) => {
-        //             const wssUrl = new URL(url);
-        //             wssUrl.searchParams.set('token', refreshedData.accessToken.replace('Bearer ', ''));
-        //             dispatch(connect(wssUrl.toString()));
-        //           })
-        //           .catch((err: Error) => {
-        //             dispatch(onError(err.message));
-        //           });
-        //       } else {
-        //         dispatch(onError('No refresh token available'));
-        //       }
-
-        //       dispatch(disconnect());
-
-        //       return;
-        //     }
-
-        //     dispatch(onMessage(parsedData));
-        //   } catch (err) {
-        //     dispatch(onError((err as Error).message));
-        //   }
-        // };

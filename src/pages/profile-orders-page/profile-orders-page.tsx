@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { FeedList } from '@/components/feed-list/feed-list';
+import { OrdersList } from '@/components/orders-list/orders-list';
 import { RootState, useDispatch, useSelector } from '@/services';
 import { wsClose, wsConnecting } from '@/services/profile-orders-slice';
 
@@ -20,5 +20,5 @@ export const ProfileOrdersPage: React.FC = () => {
     };
   }, []);
 
-  return <FeedList orders={orders} baseLinkPath="/profile/orders" showStatus />;
+  return <OrdersList orders={orders} baseLinkPath="/profile/orders" showStatus />;
 };
