@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IOrder, IFeed } from '@/types/feed';
+import { IFeed } from '@/types/feed';
+import { IOrder } from '@/types/order';
 
 interface IFeedState {
   orders: IOrder[];
@@ -9,7 +10,7 @@ interface IFeedState {
   error: string | null;
 }
 
-const initialState: IFeedState = {
+export const initialState: IFeedState = {
   orders: [],
   total: 0,
   totalToday: 0,
@@ -21,6 +22,7 @@ const feedSlice = createSlice({
   name: 'feed',
   initialState,
   reducers: {
+    // @ts-ignore: action not used here, but required for socketMiddleware
     wsConnecting(state, action: PayloadAction<string>) {
       state.isConnected = false;
       state.error = null;

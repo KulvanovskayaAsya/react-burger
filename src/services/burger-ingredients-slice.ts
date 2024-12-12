@@ -8,7 +8,7 @@ interface IIngredientsState extends IBaseSliceState {
   ingredients: IIngredient[];
 }
 
-const initialState: IIngredientsState = {
+export const initialState: IIngredientsState = {
   ingredients: [],
   status: STATUS.IDLE,
   error: null,

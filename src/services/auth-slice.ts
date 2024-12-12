@@ -21,7 +21,7 @@ interface IAuthState extends IBaseSliceState {
   successMessage: string;
 }
 
-const initialState: IAuthState = {
+export const initialState: IAuthState = {
   user: null,
   isAuthChecked: false,
   accessToken: null,
