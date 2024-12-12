@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction, nanoid, createSelector } from '@reduxjs/toolkit';
-import { IIngredient } from '../types/burger';
+import { IIngredient } from '@/types/burger';
 import { RootState } from '.';
 
 type IConstructorIngredient = IIngredient & { key: string };

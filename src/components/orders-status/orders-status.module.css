@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.columns {
+  column-count: 2;
+  column-gap: 16px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  composes: text text_type_main-medium from global;
+}
+
+.order {
+  composes: text text_type_digits-default from global;
+  break-inside: avoid;
+}
+
+.done {
+  color: #00cccc;
+}
+
+.pending {
+  color: #ffffff;
+}
+
+.created {
+  color: #ff9900;
+}

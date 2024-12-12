@@ -1,5 +1,5 @@
 import { API_ENDPOINTS } from './endpoints';
-import { IIngredient } from '../types/burger';
+import { IIngredient } from '@/types/burger';
 import { request } from './request';
 
 interface IIngredientsResponse {

@@ -3,10 +3,10 @@ import React, { useCallback } from 'react';
 import { Button, EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 
-import { useForm } from '../../hooks/useForm';
-import { useAuth } from '../../hooks/useAuth';
+import { useForm } from '@/hooks/useForm';
+import { useAuth } from '@/hooks/useAuth';
 
-import commonStyles from '../../common.module.css';
+import commonStyles from '@/common.module.css';
 interface IForgotPasswordForm {
   email: string;
 }

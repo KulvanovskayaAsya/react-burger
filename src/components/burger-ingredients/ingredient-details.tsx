@@ -2,9 +2,9 @@ import React from 'react';
 
 import styles from './ingredient-details.module.css';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../services';
-import { selectIngredientById } from '../../services/burgerIngredientsSlice';
+import { useSelector } from '@/services';
+import { RootState } from '@/services';
+import { selectIngredientById } from '@/services/burger-ingredients-slice';
 
 export const IngredientDetails: React.FC = () => {
   const { ingredientId } = useParams<{ ingredientId: string }>();

@@ -1,0 +1,77 @@
+.number {
+  composes: text text_type_digits-default mb-10 from global;
+  text-align: center;
+}
+
+.date {
+  composes: text text_type_main-default text_color_inactive from global;
+}
+
+.name {
+  composes: text text_type_main-medium from global;
+}
+
+.name {
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+}
+
+.status {
+  composes: text text_type_main-default mb-10 from global;
+}
+
+.statusDone {
+  color: #00cccc;
+}
+
+.statusPending {
+  color: #ffffff;
+}
+
+.statusCreated {
+  color: #ffcc00;
+}
+
+.subtitle {
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+}
+
+.ingredientsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.price {
+  margin-left: auto;
+}
+
+.ingredientImage {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+}
+
+.ingredientName {
+  composes: text text_type_main-default from global;
+  margin: 0 20px;
+}
+
+.ingredientPrice {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  color: white;
+}

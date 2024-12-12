@@ -1,6 +1,6 @@
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import commonStyles from '../../common.module.css';
+import commonStyles from '@/common.module.css';
 import styles from './app-header.module.css';
 import { NavLink } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ export const AppHeader = () => {
 
           <li className={styles.navItem}>
             <NavLink 
-              to='/orders' 
+              to='/feed' 
               className={({ isActive }) => `${styles.navLink} ${isActive ? styles.active : ''}`}
             >
               {({ isActive }) => (
