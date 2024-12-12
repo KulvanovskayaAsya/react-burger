@@ -78,7 +78,7 @@ export const socketMiddleware = <R, S>(
           }
         };
 
-        socket.onerror = (event) => {
+        socket.onerror = () => {
           dispatch(onError('WebSocket error'));
         };
 

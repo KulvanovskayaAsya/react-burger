@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from '@/services'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { AppDispatch, RootState } from '@/services';
+import { RootState } from '@/services';
 import {
   registerUser,
   loginUser,
