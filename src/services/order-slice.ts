@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchOrderById, postOrder } from '@/api/order';
 import { IBaseSliceState, STATUS } from '@/types/slices';
 import { RootState } from '.';
-import { IOrder } from '@/types/feed';
+import { IOrder } from '@/types/order';
 import { IIngredient } from '@/types/burger';
 
 interface IOrderState extends IBaseSliceState {
@@ -10,7 +10,7 @@ interface IOrderState extends IBaseSliceState {
   orderDetails: IOrder | null;
 }
 
-const initialState: IOrderState = {
+export const initialState: IOrderState = {
   status: STATUS.IDLE,
   error: null,
   orderNumber: null,
@@ -36,7 +36,6 @@ export const fetchOrderDetails = createAsyncThunk(
     }
   }
 );
-
 
 const orderSlice = createSlice({
   name: 'order',

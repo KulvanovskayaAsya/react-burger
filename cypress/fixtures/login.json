@@ -1,0 +1,9 @@
+{
+  "success": true,
+  "accessToken": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3NWFkNmI5NzUwODY0MDAxZDM3MGM0ZSIsImlhdCI6MTczNDAwNjU5NCwiZXhwIjoxNzM0MDA3Nzk0fQ.z1DzI49LIFJ0js9Sa-RRniArvebWbaj286TcwJ9ejJA",
+  "refreshToken": "4f95da906fa8e3923b862606d90b07604b2fcf15ddb02f1d41eb7b6b21372e11d90ae572231a0c81",
+  "user": {
+    "email": "asyatest@test.com",
+    "name": "asyatest"
+  }
+}

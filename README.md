@@ -1,30 +1,27 @@
-# React + TypeScript + Vite
+# Stellar Burger
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + TypeScript project built with Vite where you can build and order your perfect burger! 🥳
 
-Currently, two official plugins are available:
+## 🌐 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Check out the live version here: [Stellar Burger on Netlify](https://asya-stellar-burger.netlify.app)
 
-## Expanding the ESLint configuration
+## 🛠️ Technologies Used
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React**: For building the user interface.
+- **Redux Toolkit**: For state managment.
+- **TypeScript**: Ensuring type safety.
+- **WebSocket**: For live data updating.
+- **Vite**: For fast development and build process.
+- **Jest**: For unit tests.
+- **Cypress**: For e2e tests.
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 Features
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- Drag and drop ingredients to build your burger 🍔
+- View live updates on your order.
+- Sleek, modern interface for a seamless experience.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+---
+
+Enjoy building your burger at [asya-stellar-burger.netlify.app](https://asya-stellar-burger.netlify.app)!

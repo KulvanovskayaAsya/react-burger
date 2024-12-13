@@ -82,6 +82,7 @@ export const BurgerConstructor: React.FC = () => {
       <div
         ref={dropTarget}
         className={`${styles.constructorWrapper} ${isHover ? styles.hovered : ''}`}
+        data-testid='burger-constructor-container'
       >
         {!bun && ingredients.length === 0 ? (
           <div className={styles.emptyState}>

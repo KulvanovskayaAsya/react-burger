@@ -36,10 +36,14 @@ export const IngredientCard: React.FC<IIngredientCardProps> = ({ ingredient }) =
       <article
         className={styles.card}
         ref={dragRef}
+        data-testid={`ingredient-card-${ingredient._id}`}
       >
         <img className={styles.cardImage} src={ingredient.image} alt={`Внешний вид ингредиента ${ingredient.name}`} />
         <Price price={ingredient.price} />
-        <p className={styles.cardTitle}>
+        <p
+          className={styles.cardTitle}
+          data-testid='ingredient-name'
+        >
           {ingredient.name}
         </p>
         {count > 0 && <Counter count={count} size='default' extraClass='m-1' />}

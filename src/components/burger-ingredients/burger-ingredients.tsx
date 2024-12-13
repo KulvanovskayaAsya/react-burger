@@ -74,7 +74,12 @@ export const BurgerIngredients: React.FC = () => {
         ))}
       </div>
 
-      <div className={styles.burgerIngredients} ref={scrollContainerRef} onScroll={handleScrollEnd}>
+      <div
+        className={styles.burgerIngredients}
+        ref={scrollContainerRef}
+        onScroll={handleScrollEnd}
+        data-testid='burger-ingredients-container'
+      >
         {sections.map(({ title, type, ingredients }) => (
           <IngredientsTypeSection
             key={type}

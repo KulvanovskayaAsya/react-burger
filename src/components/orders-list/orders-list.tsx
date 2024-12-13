@@ -1,5 +1,5 @@
 import { useSelector } from '@/services';
-import { IOrder } from '@/types/feed';
+import { IOrder } from '@/types/order';
 import { OrderCard } from '@/components/orders-list/order-card';
 import { selectIngredientsMap } from '@/services/burger-ingredients-slice';
 import { IIngredient } from '@/types/burger';

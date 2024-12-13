@@ -2,13 +2,14 @@ import { createSlice, PayloadAction, nanoid, createSelector } from '@reduxjs/too
 import { IIngredient } from '@/types/burger';
 import { RootState } from '.';
 
-type IConstructorIngredient = IIngredient & { key: string };
+export type IConstructorIngredient = IIngredient & { key: string };
 
 interface IBurgerConstructorState {
   bun: IIngredient | null;
   ingredients: Array<IConstructorIngredient>;
 }
-const initialState: IBurgerConstructorState = {
+
+export const initialState: IBurgerConstructorState = {
   bun: null,
   ingredients: []
 };
