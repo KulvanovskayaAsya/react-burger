@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -15,12 +15,26 @@ interface IModalProps {
 const modalRoot = document.getElementById('modals') as HTMLElement; // Портал
 
 export const Modal: React.FC<IModalProps> = ({ title, onClose, children }) => {
+  useEffect(() => {
+    const handleEscapeKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscapeKey);
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [onClose]);
+
   return ReactDOM.createPortal(
     <>
       <ModalOverlay onClick={onClose} />
       <div
-      className={styles.modal}
-      data-testid='modal'
+        className={styles.modal}
+        data-testid='modal'
       >
         <div className={styles.header}>
           <h2 className={styles.title}>{title}</h2>

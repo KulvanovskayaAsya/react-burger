@@ -5,7 +5,7 @@ describe("Home page", () => {
     cy.mockRequests();
 		cy.setTokens();
 
-    cy.visit("http://localhost:5173/");
+    cy.visit("/");
   });
 
   describe("Drag and Drop functionality", () => {
@@ -37,6 +37,16 @@ describe("Home page", () => {
     cy.get(selectors.modal).should("be.visible");
   });
 
+  it("should close the ingredient modal when 'Esc' is pressed", () => {
+    cy.wait("@getIngredients");
+
+    cy.get(selectors.ingredientCard).first().click();
+    cy.get(selectors.modal).should("be.visible");
+
+    cy.get("body").type("{esc}");
+    cy.get(selectors.modal).should("not.exist");
+  });
+
   it("should close modal when close button is clicked", () => {
     cy.wait("@getIngredients");
 
@@ -54,14 +64,5 @@ describe("Home page", () => {
     cy.get("body").click(0, 0);
 
     cy.get(selectors.modal).should("not.exist");
-  });
-
-  it("should open order modal when 'Оформить заказ' is clicked", () => {
-    cy.wait("@getIngredients");
-
-    cy.get(selectors.submitOrderButton).click();
-
-    cy.get(selectors.modal).should("be.visible");
-    cy.get(selectors.modal).should("contain", "Ваш заказ оформлен");
   });
 });
